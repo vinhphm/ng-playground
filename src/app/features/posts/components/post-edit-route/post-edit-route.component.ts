@@ -1,6 +1,6 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { PostModalService } from '../services/post-modal.service';
+import { PostModalService } from '@features/posts/services/post-modal.service';
 
 interface Post {
   id: number;
@@ -46,7 +46,7 @@ export class PostEditRouteComponent implements OnInit {
   ngOnInit() {
     const id = Number(this.route.snapshot.paramMap.get('id'));
     const post = this.mockPosts.find(p => p.id === id);
-    
+
     if (post) {
       // Open the edit modal when this route is activated
       this.postModalService.openEditModal(post);

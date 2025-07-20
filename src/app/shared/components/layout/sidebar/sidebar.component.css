@@ -1,0 +1,46 @@
+.logo {
+  height: 32px;
+  margin: 16px;
+  color: white;
+  text-align: center;
+  line-height: 32px;
+  font-weight: bold;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 6px;
+}
+
+nz-sider {
+  overflow: auto;
+  height: 100vh;
+  position: fixed;
+  left: 0;
+  top: 0;
+  bottom: 0;
+}
+
+[nz-menu] {
+  border-right: 0;
+}
+
+:host ::ng-deep .ant-menu-dark {
+  background: #001529;
+}
+
+:host ::ng-deep .ant-menu-dark .ant-menu-item,
+:host ::ng-deep .ant-menu-dark .ant-menu-submenu-title {
+  color: rgba(255, 255, 255, 0.65);
+}
+
+:host ::ng-deep .ant-menu-dark .ant-menu-item:hover,
+:host ::ng-deep .ant-menu-dark .ant-menu-submenu-title:hover {
+  color: #fff;
+}
+
+:host ::ng-deep .ant-menu-dark .ant-menu-item-selected {
+  background-color: #1890ff;
+  color: #fff;
+}
+
+:host ::ng-deep .ant-menu-dark .ant-menu-submenu-selected > .ant-menu-submenu-title {
+  color: #fff;
+}

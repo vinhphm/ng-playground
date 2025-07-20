@@ -1,0 +1,51 @@
+<nz-sider 
+  nzCollapsible 
+  [nzCollapsed]="isCollapsed" 
+  [nzWidth]="200"
+  [nzCollapsedWidth]="80"
+  (nzCollapsedChange)="onCollapsedChange($event)">
+  <div class="logo">
+    @if (!isCollapsed) {
+      <h3>NG Refine</h3>
+    } @else {
+      <span>NR</span>
+    }
+  </div>
+  <ul nz-menu nzTheme="dark" nzMode="inline" [nzInlineCollapsed]="isCollapsed">
+    @for (resource of menuItems(); track resource.name) {
+      @if (resource.children && resource.children.length > 0) {
+        <li nz-submenu 
+            [nzTitle]="resource.meta?.label || resource.name"
+            [nzIcon]="resource.meta?.icon || null">
+          <ul>
+            <li nz-menu-item 
+                (click)="navigateToResource(resource.name, 'list')"
+                [nzSelected]="isCurrentRoute(resource.name, 'list')">
+              <nz-icon nzType="unordered-list"></nz-icon>
+              <span>List</span>
+            </li>
+            @for (child of resource.children; track child.name) {
+              <li nz-menu-item 
+                  (click)="navigateToNestedResource(resource.name, child.name, 'list')"
+                  [nzSelected]="isCurrentRoute(child.name, 'list')">
+                @if (child.meta?.icon; as icon) {
+                  <nz-icon [nzType]="icon"></nz-icon>
+                }
+                <span>{{ child.meta?.label || child.name }}</span>
+              </li>
+            }
+          </ul>
+        </li>
+      } @else {
+        <li nz-menu-item 
+            (click)="navigateToResource(resource.name, 'list')"
+            [nzSelected]="isCurrentRoute(resource.name, 'list')">
+          @if (resource.meta?.icon; as icon) {
+            <nz-icon [nzType]="icon"></nz-icon>
+          }
+          <span>{{ resource.meta?.label || resource.name }}</span>
+        </li>
+      }
+    }
+  </ul>
+</nz-sider>

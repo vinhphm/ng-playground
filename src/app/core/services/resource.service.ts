@@ -1,5 +1,5 @@
 import { Injectable, signal, computed } from '@angular/core';
-import { ResourceConfig } from '../types';
+import { ResourceConfig } from '@core/types';
 
 @Injectable({
   providedIn: 'root'

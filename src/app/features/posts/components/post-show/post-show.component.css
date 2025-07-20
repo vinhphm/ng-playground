@@ -1,0 +1,15 @@
+.page-header {
+  @apply flex justify-between items-center mb-6;
+}
+
+.page-header h2 {
+  @apply m-0;
+}
+
+.post-meta p {
+  @apply my-2 text-gray-600;
+}
+
+.post-content {
+  @apply leading-relaxed text-base;
+}

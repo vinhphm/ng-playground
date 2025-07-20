@@ -1,0 +1,41 @@
+<nz-layout class="app-layout">
+  <app-sidebar [isCollapsed]="isCollapsed()" (collapsedChange)="onCollapsedChange($event)"></app-sidebar>
+  <nz-layout [class.layout-collapsed]="isCollapsed()" class="main-layout">
+    <nz-header class="app-header">
+      <div class="header-content">
+        <button nz-button nzType="text" nzSize="large" class="trigger" (click)="toggleCollapsed()">
+          <nz-icon [nzType]="isCollapsed() ? 'menu-unfold' : 'menu-fold'"></nz-icon>
+        </button>
+        <div class="header-extras">
+          <nz-avatar nzIcon="user" nzSize="small"></nz-avatar>
+          <a nz-dropdown [nzDropdownMenu]="menu" nzTrigger="click" class="user-dropdown">
+            <span>Admin User</span>
+            <nz-icon nzType="down"></nz-icon>
+          </a>
+          <nz-dropdown-menu #menu="nzDropdownMenu">
+            <ul nz-menu>
+              <li nz-menu-item>
+                <nz-icon nzType="user"></nz-icon>
+                Profile
+              </li>
+              <li nz-menu-item>
+                <nz-icon nzType="setting"></nz-icon>
+                Settings
+              </li>
+              <li nz-menu-divider></li>
+              <li nz-menu-item>
+                <nz-icon nzType="logout"></nz-icon>
+                Logout
+              </li>
+            </ul>
+          </nz-dropdown-menu>
+        </div>
+      </div>
+    </nz-header>
+    <nz-content class="app-content">
+      <div class="content-wrapper">
+        <router-outlet></router-outlet>
+      </div>
+    </nz-content>
+  </nz-layout>
+</nz-layout>

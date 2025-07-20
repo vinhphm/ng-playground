@@ -8,6 +8,7 @@ import { provideNzIcons } from 'ng-zorro-antd/icon';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { registerLocaleData } from '@angular/common';
 import en from '@angular/common/locales/en';
+import { provideTanStackQuery, QueryClient } from '@tanstack/angular-query-experimental';
 
 // Import required icons
 import { 
@@ -25,7 +26,7 @@ import {
   MenuUnfoldOutline
 } from '@ant-design/icons-angular/icons';
 
-import { routes } from './app.routes';
+import { routes } from '@app/app.routes';
 
 registerLocaleData(en);
 
@@ -54,6 +55,14 @@ export const appConfig: ApplicationConfig = {
     provideNzI18n(en_US),
     provideNzIcons(icons),
     importProvidersFrom(FormsModule),
-    NzModalService
+    NzModalService,
+    provideTanStackQuery(new QueryClient({
+      defaultOptions: {
+        queries: {
+          staleTime: 5 * 60 * 1000, // 5 minutes
+          refetchOnWindowFocus: false,
+        },
+      },
+    }))
   ]
 };

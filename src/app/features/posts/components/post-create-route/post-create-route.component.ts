@@ -1,6 +1,6 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { PostModalService } from '../services/post-modal.service';
+import { PostModalService } from '@features/posts/services/post-modal.service';
 
 @Component({
   selector: 'app-post-create-route',

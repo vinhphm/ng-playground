@@ -1,0 +1,75 @@
+<div class="page-header">
+  <h2>User Details</h2>
+  <nz-space>
+    <button *nzSpaceItem nz-button (click)="goBack()">
+      <span nz-icon nzType="arrow-left"></span>
+      Back to Users
+    </button>
+    @if (userQuery.data()) {
+      <button
+        *nzSpaceItem
+        nz-button
+        nzDanger
+        nz-popconfirm
+        nzPopconfirmTitle="Are you sure you want to delete this user?"
+        (nzOnConfirm)="deleteUser()"
+      >
+        <span nz-icon nzType="delete"></span>
+        Delete
+      </button>
+    }
+  </nz-space>
+</div>
+
+@if (userQuery.data(); as currentUser) {
+  <nz-card [nzTitle]="currentUser.name">
+    <nz-descriptions nzBordered [nzColumn]="2">
+      <nz-descriptions-item nzTitle="User ID">{{ currentUser.id }}</nz-descriptions-item>
+      <nz-descriptions-item nzTitle="Username">{{ currentUser.username }}</nz-descriptions-item>
+
+      <nz-descriptions-item nzTitle="Email">{{ currentUser.email }}</nz-descriptions-item>
+      <nz-descriptions-item nzTitle="Phone">{{ currentUser.phone }}</nz-descriptions-item>
+
+      <nz-descriptions-item nzTitle="Website">{{ currentUser.website }}</nz-descriptions-item>
+      <nz-descriptions-item nzTitle="Company">{{ currentUser.company.name }}</nz-descriptions-item>
+
+      <nz-descriptions-item nzTitle="Address" [nzSpan]="2">
+        {{ currentUser.address.street }}, {{ currentUser.address.suite }}<br>
+        {{ currentUser.address.city }}, {{ currentUser.address.zipcode }}
+      </nz-descriptions-item>
+
+      <nz-descriptions-item nzTitle="Company Details" [nzSpan]="2">
+        <strong>{{ currentUser.company.name }}</strong><br>
+        <em>{{ currentUser.company.catchPhrase }}</em><br>
+        {{ currentUser.company.bs }}
+      </nz-descriptions-item>
+    </nz-descriptions>
+
+  <nz-divider></nz-divider>
+
+  <div class="user-actions">
+    <h3>Quick Actions</h3>
+    <nz-space>
+      <button *nzSpaceItem nz-button nzType="default" disabled>
+        <span nz-icon nzType="mail"></span>
+        Send Email
+      </button>
+      <button *nzSpaceItem nz-button nzType="default" disabled>
+        <span nz-icon nzType="edit"></span>
+        Edit Profile
+      </button>
+      <button *nzSpaceItem nz-button nzType="default" disabled>
+        <span nz-icon nzType="setting"></span>
+        Manage Permissions
+      </button>
+    </nz-space>
+  </div>
+  </nz-card>
+} @else {
+  <nz-card nzTitle="User Not Found">
+    <p>The requested user could not be found.</p>
+    <button nz-button nzType="primary" (click)="goBack()">
+      Back to Users
+    </button>
+  </nz-card>
+}

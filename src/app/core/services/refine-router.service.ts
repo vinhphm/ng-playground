@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Route } from '@angular/router';
-import { ResourceConfig, ActionType } from '../types';
+import { ResourceConfig, ActionType } from '@core/types';
 
 @Injectable({
   providedIn: 'root'
