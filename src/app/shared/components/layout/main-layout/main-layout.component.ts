@@ -2,13 +2,6 @@ import { Component, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
 import { NzLayoutModule } from 'ng-zorro-antd/layout';
-import { NzPageHeaderModule } from 'ng-zorro-antd/page-header';
-import { NzBreadCrumbModule } from 'ng-zorro-antd/breadcrumb';
-import { NzButtonModule } from 'ng-zorro-antd/button';
-import { NzIconModule } from 'ng-zorro-antd/icon';
-import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
-import { NzMenuModule } from 'ng-zorro-antd/menu';
-import { NzAvatarModule } from 'ng-zorro-antd/avatar';
 import { SidebarComponent } from '@shared/components/layout/sidebar/sidebar.component';
 
 @Component({
@@ -18,13 +11,6 @@ import { SidebarComponent } from '@shared/components/layout/sidebar/sidebar.comp
     CommonModule, 
     RouterOutlet, 
     NzLayoutModule, 
-    NzPageHeaderModule,
-    NzBreadCrumbModule,
-    NzButtonModule,
-    NzIconModule,
-    NzDropDownModule,
-    NzMenuModule,
-    NzAvatarModule,
     SidebarComponent
   ],
   templateUrl: './main-layout.component.html',

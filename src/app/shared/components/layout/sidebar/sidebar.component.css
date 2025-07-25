@@ -1,21 +1,40 @@
+@import "tailwindcss" reference;
+
+.sidebar-content {
+  @apply flex flex-col h-screen relative;
+}
+
 .logo {
-  height: 32px;
-  margin: 16px;
-  color: white;
-  text-align: center;
-  line-height: 32px;
-  font-weight: bold;
+  @apply h-8 m-4 text-white text-center leading-8 font-bold rounded-md;
   background: rgba(255, 255, 255, 0.2);
-  border-radius: 6px;
 }
 
 nz-sider {
-  overflow: auto;
-  height: 100vh;
-  position: fixed;
-  left: 0;
-  top: 0;
-  bottom: 0;
+  @apply overflow-auto h-screen fixed left-0 top-0 bottom-0;
+}
+
+.menu-container {
+  @apply flex flex-col h-full;
+}
+
+.main-menu {
+  @apply flex-1;
+}
+
+.user-section {
+  @apply mt-auto mb-12;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.user-menu {
+  @apply border-0;
+}
+
+/* Override collapse button positioning */
+:host ::ng-deep .ant-layout-sider-trigger {
+  @apply absolute bottom-0 w-full h-12;
+  background: rgba(0, 21, 41, 0.8) !important;
+  border-top: 1px solid rgba(255, 255, 255, 0.1) !important;
 }
 
 [nz-menu] {

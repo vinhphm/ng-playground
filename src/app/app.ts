@@ -46,7 +46,7 @@ export class App implements OnInit {
         name: "users",
         list: UserListComponent,
         show: UserShowComponent,
-        meta: { icon: "user", label: "Users" },
+        meta: { icon: "team", label: "Users" },
       },
     ]);
 
