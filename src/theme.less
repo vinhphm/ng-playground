@@ -1,0 +1,94 @@
+// Custom Ng-Zorro Theme with Rounded Corners
+// Based on React Ant Design's border-radius values
+
+// Import the default theme
+@import '../node_modules/ng-zorro-antd/ng-zorro-antd.less';
+
+// Override border radius variables for a more rounded appearance
+@border-radius-base: 6px;         // Base border radius (increased from 2px)
+@border-radius-sm: 4px;           // Small border radius (increased from 2px)
+@border-radius-lg: 8px;           // Large border radius (new variable for larger components)
+
+// Button border radius
+@btn-border-radius-base: @border-radius-base;
+@btn-border-radius-sm: @border-radius-sm;
+@btn-border-radius-lg: @border-radius-lg;
+
+// Control border radius (inputs, selects, etc.)
+@control-border-radius: @border-radius-base;
+
+// Checkbox border radius
+@checkbox-border-radius: @border-radius-sm;
+
+// Collapse panel border radius
+@collapse-panel-border-radius: @border-radius-lg;
+
+// Tooltip border radius
+@tooltip-border-radius: @border-radius-base;
+
+// Modal border radius
+@modal-border-radius: @border-radius-lg;
+
+// Table border radius
+@table-border-radius-base: @border-radius-lg;
+
+// Tag border radius
+@tag-border-radius: @border-radius-base;
+
+// Card border radius
+@card-radius: @border-radius-lg;
+
+// Avatar border radius
+@avatar-border-radius: @border-radius-lg;
+
+// Additional rounded corner customizations
+@dropdown-border-radius: @border-radius-lg;
+@popover-border-radius: @border-radius-lg;
+@notification-border-radius: @border-radius-lg;
+@message-border-radius: @border-radius-lg;
+@alert-border-radius: @border-radius-base;
+@upload-border-radius: @border-radius-base;
+@menu-item-border-radius: @border-radius-base;
+
+// Progress bar should remain fully rounded
+@progress-border-radius: 100px;
+
+// Switch should remain fully rounded
+@switch-border-radius: 100px;
+
+// Badge should be more rounded
+@badge-border-radius: 10px;
+
+// Input group specific border radius overrides
+@input-group-border-radius: @border-radius-base;
+@input-group-addon-border-radius: @border-radius-base;
+
+// Ensure input groups have consistent rounded corners
+.@{ant-prefix}-input-group {
+  .@{ant-prefix}-input:first-child,
+  &-addon:first-child {
+    border-top-left-radius: @border-radius-base !important;
+    border-bottom-left-radius: @border-radius-base !important;
+  }
+
+  .@{ant-prefix}-input:last-child,
+  &-addon:last-child {
+    border-top-right-radius: @border-radius-base !important;
+    border-bottom-right-radius: @border-radius-base !important;
+  }
+
+  &-addon {
+    border-radius: @border-radius-base;
+  }
+}
+
+// Additional customizations for specific components
+@tabs-border-radius: @border-radius-base;
+@drawer-border-radius: @border-radius-lg;
+@anchor-border-radius: @border-radius-base;
+@image-border-radius: @border-radius-base;
+@result-border-radius: @border-radius-lg;
+
+.anticon {
+    display: inline-flex !important;
+}

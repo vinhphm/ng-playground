@@ -7,14 +7,14 @@ import {
   injectMutation,
 } from "@tanstack/angular-query-experimental";
 import type { Post } from "@core";
-import { PostListPresentationComponent } from "@features/posts/components/post-list-presentation/post-list-presentation.component";
+import { PostListComponent } from "@app/features/posts/components/post-list/post-list.component";
 
 @Component({
   selector: "app-post-list-container",
   standalone: true,
-  imports: [CommonModule, RouterOutlet, PostListPresentationComponent],
+  imports: [CommonModule, RouterOutlet, PostListComponent],
   template: `
-    <app-post-list-presentation
+    <app-post-list
       [posts]="filteredPosts()"
       [loading]="loading()"
       [searchText]="searchText"

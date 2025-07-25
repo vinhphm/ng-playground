@@ -10,7 +10,7 @@ import { NzPopconfirmModule } from "ng-zorro-antd/popconfirm";
 import type { Post } from "@core";
 
 @Component({
-  selector: "app-post-list-presentation",
+  selector: "app-post-list",
   standalone: true,
   imports: [
     CommonModule,
@@ -22,10 +22,10 @@ import type { Post } from "@core";
     NzSpaceModule,
     NzPopconfirmModule,
   ],
-  templateUrl: "./post-list-presentation.component.html",
-  styleUrl: "./post-list-presentation.component.css",
+  templateUrl: "./post-list.component.html",
+  styleUrl: "./post-list.component.css",
 })
-export class PostListPresentationComponent {
+export class PostListComponent {
   @Input() posts: Post[] = [];
   @Input() loading = false;
   @Input() searchText = "";

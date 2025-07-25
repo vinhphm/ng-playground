@@ -67,6 +67,12 @@ this.resourceService.register([
 - Components follow a separation between container (data-fetching) and presentation components
 - Modal-based actions use route-level components that handle the modal state
 
+**Component Organization Rules**:
+- **Single-file components**: Placed directly in `components/` directory (e.g., `post-create.component.ts`)
+- **Multi-file components**: Have their own subdirectory when they include HTML, CSS, or multiple related files (e.g., `post-list/`, `post-show/`)
+- **Container components**: Handle data fetching and business logic, typically single-file
+- **Presentation components**: Handle UI rendering, often multi-file with templates and styles
+
 **Layout System** (`src/app/shared/components/layout/`):
 - `MainLayoutComponent` provides the overall application shell
 - `SidebarComponent` automatically generates navigation from registered resources

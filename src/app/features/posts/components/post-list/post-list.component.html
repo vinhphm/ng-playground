@@ -1,11 +1,11 @@
 <div class="page-header">
   <h2>Posts</h2>
   <nz-space>
-    <nz-input-group nzSearch nzSize="large" *nzSpaceItem>
-      <input 
-        type="text" 
-        nz-input 
-        placeholder="Search posts..." 
+    <nz-input-group nzSearch *nzSpaceItem>
+      <input
+        type="text"
+        nz-input
+        placeholder="Search posts..."
         [(ngModel)]="searchText"
         (ngModelChange)="onSearchChange()"
       />
@@ -17,9 +17,9 @@
   </nz-space>
 </div>
 
-<nz-table 
-  #basicTable 
-  [nzData]="posts" 
+<nz-table
+  #basicTable
+  [nzData]="posts"
   [nzPageSize]="10"
   [nzShowPagination]="true"
   [nzLoading]="loading"
@@ -50,10 +50,10 @@
               <span nz-icon nzType="edit"></span>
               Edit
             </button>
-            <button 
-              *nzSpaceItem 
-              nz-button 
-              nzSize="small" 
+            <button
+              *nzSpaceItem
+              nz-button
+              nzSize="small"
               nzDanger
               nz-popconfirm
               nzPopconfirmTitle="Are you sure you want to delete this post?"

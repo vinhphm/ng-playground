@@ -1,7 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { NzModalService, NzModalRef } from 'ng-zorro-antd/modal';
-import { PostFormModalComponent } from '@features/posts/components/post-form-modal/post-form-modal.component';
+import { PostFormModalComponent } from '@features/posts/components/post-form-modal.component';
 
 interface Post {
   id: number;
