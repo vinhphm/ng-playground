@@ -1,18 +1,19 @@
-import { Component, inject, signal, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { ActivatedRoute } from '@angular/router';
-import { NzButtonModule } from 'ng-zorro-antd/button';
-import { NzIconModule } from 'ng-zorro-antd/icon';
-import { NzSpaceModule } from 'ng-zorro-antd/space';
-import { NzCardModule } from 'ng-zorro-antd/card';
-import { NzDividerModule } from 'ng-zorro-antd/divider';
-import { NzTagModule } from 'ng-zorro-antd/tag';
-import { NzDescriptionsModule } from 'ng-zorro-antd/descriptions';
-import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
-import { NavigationService, ApiService } from '@core';
-import { injectQuery, injectMutation } from '@tanstack/angular-query-experimental';
-import type { User } from '@core';
-
+import { CommonModule } from '@angular/common'
+import { Component, inject, type OnInit, signal } from '@angular/core'
+import { ActivatedRoute } from '@angular/router'
+import { ApiService, NavigationService } from '@core'
+import {
+  injectMutation,
+  injectQuery,
+} from '@tanstack/angular-query-experimental'
+import { NzButtonModule } from 'ng-zorro-antd/button'
+import { NzCardModule } from 'ng-zorro-antd/card'
+import { NzDescriptionsModule } from 'ng-zorro-antd/descriptions'
+import { NzDividerModule } from 'ng-zorro-antd/divider'
+import { NzIconModule } from 'ng-zorro-antd/icon'
+import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm'
+import { NzSpaceModule } from 'ng-zorro-antd/space'
+import { NzTagModule } from 'ng-zorro-antd/tag'
 
 @Component({
   selector: 'app-user-show',
@@ -26,44 +27,44 @@ import type { User } from '@core';
     NzDividerModule,
     NzTagModule,
     NzDescriptionsModule,
-    NzPopconfirmModule
+    NzPopconfirmModule,
   ],
   templateUrl: './user-show.component.html',
-  styleUrl: './user-show.component.css'
+  styleUrl: './user-show.component.css',
 })
 export class UserShowComponent implements OnInit {
-  private route = inject(ActivatedRoute);
-  private navigationService = inject(NavigationService);
-  private apiService = inject(ApiService);
+  private route = inject(ActivatedRoute)
+  private navigationService = inject(NavigationService)
+  private apiService = inject(ApiService)
 
-  userId = signal<number>(0);
+  userId = signal<number>(0)
 
   userQuery = injectQuery(() => ({
     queryKey: ['user', this.userId()],
     queryFn: () => this.apiService.getUser(this.userId()),
-    enabled: this.userId() > 0
-  }));
+    enabled: this.userId() > 0,
+  }))
 
   deleteMutation = injectMutation(() => ({
     mutationFn: (id: number) => this.apiService.deleteUser(id),
     onSuccess: () => {
-      this.goBack();
-    }
-  }));
+      this.goBack()
+    },
+  }))
 
   ngOnInit() {
-    const id = Number(this.route.snapshot.paramMap.get('id'));
-    this.userId.set(id);
+    const id = Number(this.route.snapshot.paramMap.get('id'))
+    this.userId.set(id)
   }
 
   goBack() {
-    this.navigationService.goToList('users');
+    this.navigationService.goToList('users')
   }
 
   deleteUser() {
-    const currentUser = this.userQuery.data();
+    const currentUser = this.userQuery.data()
     if (currentUser) {
-      this.deleteMutation.mutate(currentUser.id);
+      this.deleteMutation.mutate(currentUser.id)
     }
   }
 }

@@ -1,22 +1,27 @@
-import { Component, inject, signal, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { ActivatedRoute } from '@angular/router';
-import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
-import { NzFormModule } from 'ng-zorro-antd/form';
-import { NzInputModule } from 'ng-zorro-antd/input';
-import { NzButtonModule } from 'ng-zorro-antd/button';
-import { NzIconModule } from 'ng-zorro-antd/icon';
-import { NzSpaceModule } from 'ng-zorro-antd/space';
-import { NzCardModule } from 'ng-zorro-antd/card';
-import { NzMessageService } from 'ng-zorro-antd/message';
-import { NavigationService } from '@core';
+import { CommonModule } from '@angular/common'
+import { Component, inject, type OnInit, signal } from '@angular/core'
+import {
+  FormBuilder,
+  type FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms'
+import { ActivatedRoute } from '@angular/router'
+import { NavigationService } from '@core'
+import { NzButtonModule } from 'ng-zorro-antd/button'
+import { NzCardModule } from 'ng-zorro-antd/card'
+import { NzFormModule } from 'ng-zorro-antd/form'
+import { NzIconModule } from 'ng-zorro-antd/icon'
+import { NzInputModule } from 'ng-zorro-antd/input'
+import { NzMessageService } from 'ng-zorro-antd/message'
+import { NzSpaceModule } from 'ng-zorro-antd/space'
 
 interface Post {
-  id: number;
-  title: string;
-  content: string;
-  author: string;
-  createdAt: Date;
+  id: number
+  title: string
+  content: string
+  author: string
+  createdAt: Date
 }
 
 @Component({
@@ -30,7 +35,7 @@ interface Post {
     NzButtonModule,
     NzIconModule,
     NzSpaceModule,
-    NzCardModule
+    NzCardModule,
   ],
   template: `
     <div class="page-header">
@@ -97,7 +102,8 @@ interface Post {
       </nz-card>
     </ng-template>
   `,
-  styles: [`
+  styles: [
+    `
     .page-header {
       display: flex;
       justify-content: space-between;
@@ -116,89 +122,91 @@ interface Post {
     textarea {
       resize: vertical;
     }
-  `]
+  `,
+  ],
 })
 export class PostEditComponent implements OnInit {
-  private route = inject(ActivatedRoute);
-  private fb = inject(FormBuilder);
-  private navigationService = inject(NavigationService);
-  private message = inject(NzMessageService);
-  
-  post = signal<Post | null>(null);
-  submitting = signal(false);
-  
+  private route = inject(ActivatedRoute)
+  private fb = inject(FormBuilder)
+  private navigationService = inject(NavigationService)
+  private message = inject(NzMessageService)
+
+  post = signal<Post | null>(null)
+  submitting = signal(false)
+
   postForm: FormGroup = this.fb.group({
     title: ['', [Validators.required, Validators.minLength(3)]],
     author: ['', [Validators.required, Validators.minLength(2)]],
-    content: ['', [Validators.required, Validators.minLength(10)]]
-  });
-  
+    content: ['', [Validators.required, Validators.minLength(10)]],
+  })
+
   private mockPosts: Post[] = [
     {
       id: 1,
       title: 'Getting Started with Angular',
-      content: 'Angular is a powerful framework for building dynamic web applications...',
+      content:
+        'Angular is a powerful framework for building dynamic web applications...',
       author: 'John Doe',
-      createdAt: new Date('2024-01-15')
+      createdAt: new Date('2024-01-15'),
     },
     {
       id: 2,
       title: 'Advanced TypeScript Tips',
       content: 'TypeScript brings static typing to JavaScript...',
       author: 'Jane Smith',
-      createdAt: new Date('2024-01-20')
+      createdAt: new Date('2024-01-20'),
     },
     {
       id: 3,
       title: 'Building Reactive Forms',
       content: 'Reactive forms in Angular provide a model-driven approach...',
       author: 'Bob Johnson',
-      createdAt: new Date('2024-01-25')
-    }
-  ];
+      createdAt: new Date('2024-01-25'),
+    },
+  ]
 
   ngOnInit() {
-    const id = Number(this.route.snapshot.paramMap.get('id'));
-    const foundPost = this.mockPosts.find(post => post.id === id);
-    
+    const id = Number(this.route.snapshot.paramMap.get('id'))
+    const foundPost = this.mockPosts.find((post) => post.id === id)
+
     if (foundPost) {
-      this.post.set(foundPost);
+      this.post.set(foundPost)
       this.postForm.patchValue({
         title: foundPost.title,
         author: foundPost.author,
-        content: foundPost.content
-      });
+        content: foundPost.content,
+      })
     } else {
-      this.post.set(null);
+      this.post.set(null)
     }
   }
 
   onSubmit() {
     if (this.postForm.valid && this.post()) {
-      this.submitting.set(true);
-      
+      this.submitting.set(true)
+
       // Simulate API call
       setTimeout(() => {
-        this.submitting.set(false);
-        this.message.success('Post updated successfully!');
-        this.goBack();
-      }, 1000);
+        this.submitting.set(false)
+        this.message.success('Post updated successfully!')
+        this.goBack()
+      }, 1000)
     } else {
-      Object.values(this.postForm.controls).forEach(control => {
+      for (const control of Object.values(this.postForm.controls)) {
         if (control.invalid) {
-          control.markAsDirty();
-          control.updateValueAndValidity({ onlySelf: true });
+          control.markAsDirty()
+          control.updateValueAndValidity({ onlySelf: true })
         }
-      });
+      }
     }
   }
 
   goBack() {
-    const currentPost = this.post();
+    const currentPost = this.post()
     if (currentPost) {
-      this.navigationService.goToShow('posts', currentPost.id.toString());
+      this.navigationService.goToShow('posts', currentPost.id.toString())
     } else {
-      this.navigationService.goToList('posts');
+      this.navigationService.goToList('posts')
     }
   }
 }

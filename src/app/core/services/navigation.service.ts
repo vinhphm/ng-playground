@@ -1,107 +1,105 @@
-import { Injectable, inject } from "@angular/core";
-import { Router } from "@angular/router";
-import { RouteParams, ActionType } from "@core/types";
+import { Injectable, inject } from '@angular/core'
+import { Router } from '@angular/router'
+import type { ActionType } from '@core/types'
 
 export interface GoOptions {
   to: {
-    resource: string;
-    action: ActionType;
-    id?: string;
-  };
-  query?: Record<string, any>;
-  type?: "push" | "replace";
+    resource: string
+    action: ActionType
+    id?: string
+  }
+  query?: Record<string, unknown>
+  type?: 'push' | 'replace'
   options?: {
-    parentResource?: string;
-    parentId?: string;
-  };
+    parentResource?: string
+    parentId?: string
+  }
 }
 
 @Injectable({
-  providedIn: "root",
+  providedIn: 'root',
 })
 export class NavigationService {
-  private router = inject(Router);
-
-  constructor() {}
+  private router = inject(Router)
 
   go(options: GoOptions): Promise<boolean> {
-    const { to, query, type = "push", options: navOptions } = options;
-    const url = this.buildUrl(to, navOptions);
+    const { to, query, type = 'push', options: navOptions } = options
+    const url = this.buildUrl(to, navOptions)
 
     const navigationExtras = {
       queryParams: query,
-      replaceUrl: type === "replace",
-    };
+      replaceUrl: type === 'replace',
+    }
 
-    return this.router.navigate([url], navigationExtras);
+    return this.router.navigate([url], navigationExtras)
   }
 
   private buildUrl(
     to: { resource: string; action: ActionType; id?: string },
-    options?: { parentResource?: string; parentId?: string },
+    options?: { parentResource?: string; parentId?: string }
   ): string {
-    const { resource, action, id } = to;
-    const { parentResource, parentId } = options || {};
+    const { resource, action, id } = to
+    const { parentResource, parentId } = options || {}
 
-    let url = "";
+    let url = ''
 
     if (parentResource && parentId) {
-      url += `/${parentResource}/${parentId}`;
+      url += `/${parentResource}/${parentId}`
     }
 
-    url += `/${resource}`;
+    url += `/${resource}`
 
-    if (action === "create") {
-      url += "/create";
+    if (action === 'create') {
+      url += '/create'
     } else if (id) {
-      url += `/${id}`;
-      if (action === "edit") {
-        url += "/edit";
+      url += `/${id}`
+      if (action === 'edit') {
+        url += '/edit'
       }
     }
 
-    return url;
+    return url
   }
 
   goToList(
     resource: string,
-    options?: { parentResource?: string; parentId?: string },
+    options?: { parentResource?: string; parentId?: string }
   ): Promise<boolean> {
     return this.go({
-      to: { resource, action: "list" },
+      to: { resource, action: 'list' },
       options,
-    });
+    })
   }
 
   goToShow(
     resource: string,
     id: string,
-    options?: { parentResource?: string; parentId?: string },
+    options?: { parentResource?: string; parentId?: string }
   ): Promise<boolean> {
     return this.go({
-      to: { resource, action: "show", id },
+      to: { resource, action: 'show', id },
       options,
-    });
+    })
   }
 
   goToEdit(
     resource: string,
     id: string,
-    options?: { parentResource?: string; parentId?: string },
+    options?: { parentResource?: string; parentId?: string }
   ): Promise<boolean> {
     return this.go({
-      to: { resource, action: "edit", id },
+      to: { resource, action: 'edit', id },
       options,
-    });
+    })
   }
 
   goToCreate(
     resource: string,
-    options?: { parentResource?: string; parentId?: string },
+    options?: { parentResource?: string; parentId?: string }
   ): Promise<boolean> {
     return this.go({
-      to: { resource, action: "create" },
+      to: { resource, action: 'create' },
       options,
-    });
+    })
   }
 }

@@ -1,16 +1,15 @@
-import { Component, inject, signal, computed } from "@angular/core";
-import { CommonModule } from "@angular/common";
-import { RouterOutlet } from "@angular/router";
-import { NavigationService, ApiService } from "@core";
+import { CommonModule } from '@angular/common'
+import { Component, computed, inject } from '@angular/core'
+import { RouterOutlet } from '@angular/router'
+import { PostListComponent } from '@app/features/posts/components/post-list/post-list.component'
+import { ApiService, NavigationService } from '@core'
 import {
-  injectQuery,
   injectMutation,
-} from "@tanstack/angular-query-experimental";
-import type { Post } from "@core";
-import { PostListComponent } from "@app/features/posts/components/post-list/post-list.component";
+  injectQuery,
+} from '@tanstack/angular-query-experimental'
 
 @Component({
-  selector: "app-post-list-container",
+  selector: 'app-post-list-container',
   standalone: true,
   imports: [CommonModule, RouterOutlet, PostListComponent],
   template: `
@@ -30,55 +29,57 @@ import { PostListComponent } from "@app/features/posts/components/post-list/post
   `,
 })
 export class PostListContainerComponent {
-  private navigationService = inject(NavigationService);
-  private apiService = inject(ApiService);
+  private navigationService = inject(NavigationService)
+  private apiService = inject(ApiService)
 
-  searchText = "";
+  searchText = ''
 
   postsQuery = injectQuery(() => ({
-    queryKey: ["posts"],
+    queryKey: ['posts'],
     queryFn: () => this.apiService.getPosts(),
-  }));
+  }))
 
   deleteMutation = injectMutation(() => ({
     mutationFn: (id: number) => this.apiService.deletePost(id),
     onSuccess: () => {
-      this.postsQuery.refetch();
+      this.postsQuery.refetch()
     },
-  }));
+  }))
 
   filteredPosts = computed(() => {
-    const posts = this.postsQuery.data() || [];
-    if (!this.searchText) return posts;
+    const posts = this.postsQuery.data() || []
+    if (!this.searchText) {
+      return posts
+    }
 
     return posts.filter(
       (post) =>
         post.title.toLowerCase().includes(this.searchText.toLowerCase()) ||
-        post.body.toLowerCase().includes(this.searchText.toLowerCase()),
-    );
-  });
+        post.body.toLowerCase().includes(this.searchText.toLowerCase())
+    )
+  })
 
   loading = computed(
-    () => this.postsQuery.isPending() || this.deleteMutation.isPending(),
-  );
+    () => this.postsQuery.isPending() || this.deleteMutation.isPending()
+  )
 
   onSearchTextChange(searchText: string) {
-    this.searchText = searchText;
+    this.searchText = searchText
   }
 
   viewPost(id: number) {
-    this.navigationService.goToShow("posts", id.toString());
+    this.navigationService.goToShow('posts', id.toString())
   }
 
   editPost(id: number) {
-    this.navigationService.goToEdit("posts", id.toString());
+    this.navigationService.goToEdit('posts', id.toString())
   }
 
   createPost() {
-    this.navigationService.goToCreate("posts");
+    this.navigationService.goToCreate('posts')
   }
 
   deletePost(id: number) {
-    this.deleteMutation.mutate(id);
+    this.deleteMutation.mutate(id)
   }
 }

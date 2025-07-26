@@ -1,22 +1,22 @@
-import { Injectable, inject } from '@angular/core';
-import { Router } from '@angular/router';
-import { NzModalService, NzModalRef } from 'ng-zorro-antd/modal';
-import { PostFormModalComponent } from '@features/posts/components/post-form-modal.component';
+import { Injectable, inject } from '@angular/core'
+import { Router } from '@angular/router'
+import { PostFormModalComponent } from '@features/posts/components/post-form-modal.component'
+import { type NzModalRef, NzModalService } from 'ng-zorro-antd/modal'
 
 interface Post {
-  id: number;
-  title: string;
-  content: string;
-  author: string;
-  createdAt: Date;
+  id: number
+  title: string
+  content: string
+  author: string
+  createdAt: Date
 }
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class PostModalService {
-  private modalService = inject(NzModalService);
-  private router = inject(Router);
+  private modalService = inject(NzModalService)
+  private router = inject(Router)
 
   openCreateModal(): NzModalRef {
     const modal: NzModalRef = this.modalService.create({
@@ -28,28 +28,27 @@ export class PostModalService {
         {
           label: 'Cancel',
           type: 'default',
-          onClick: () => modal.close()
+          onClick: () => modal.close(),
         },
         {
           label: 'Create Post',
           type: 'primary',
-          loading: (): boolean => modal.getContentComponent()?.isSubmitting || false,
+          loading: (): boolean => modal.getContentComponent()?.isSubmitting,
           disabled: (): boolean => !modal.getContentComponent()?.isFormValid,
-          onClick: () => modal.getContentComponent()?.onSubmit()
-        }
-      ]
-    });
+          onClick: () => modal.getContentComponent()?.onSubmit(),
+        },
+      ],
+    })
 
-    modal.afterClose.subscribe((result: any) => {
+    modal.afterClose.subscribe((result: unknown) => {
       if (result) {
-        // Handle successful creation
-        console.log('Post created:', result);
+        // Handle successful creation result
       }
       // Navigate back to list without modal route
-      this.router.navigate(['/posts']);
-    });
+      this.router.navigate(['/posts'])
+    })
 
-    return modal;
+    return modal
   }
 
   openEditModal(post: Post): NzModalRef {
@@ -62,27 +61,26 @@ export class PostModalService {
         {
           label: 'Cancel',
           type: 'default',
-          onClick: () => modal.close()
+          onClick: () => modal.close(),
         },
         {
           label: 'Update Post',
           type: 'primary',
-          loading: (): boolean => modal.getContentComponent()?.isSubmitting || false,
+          loading: (): boolean => modal.getContentComponent()?.isSubmitting,
           disabled: (): boolean => !modal.getContentComponent()?.isFormValid,
-          onClick: () => modal.getContentComponent()?.onSubmit()
-        }
-      ]
-    });
+          onClick: () => modal.getContentComponent()?.onSubmit(),
+        },
+      ],
+    })
 
-    modal.afterClose.subscribe((result: any) => {
+    modal.afterClose.subscribe((result: unknown) => {
       if (result) {
-        // Handle successful update
-        console.log('Post updated:', result);
+        // Handle successful edit result
       }
       // Navigate back to list without modal route
-      this.router.navigate(['/posts']);
-    });
+      this.router.navigate(['/posts'])
+    })
 
-    return modal;
+    return modal
   }
 }

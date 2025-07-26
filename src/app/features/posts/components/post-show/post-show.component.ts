@@ -1,21 +1,20 @@
-import { Component, inject, signal, OnInit } from "@angular/core";
-import { CommonModule } from "@angular/common";
-import { ActivatedRoute } from "@angular/router";
-import { NzButtonModule } from "ng-zorro-antd/button";
-import { NzIconModule } from "ng-zorro-antd/icon";
-import { NzSpaceModule } from "ng-zorro-antd/space";
-import { NzCardModule } from "ng-zorro-antd/card";
-import { NzDividerModule } from "ng-zorro-antd/divider";
-import { NzPopconfirmModule } from "ng-zorro-antd/popconfirm";
-import { NavigationService, ApiService } from "@core";
+import { CommonModule } from '@angular/common'
+import { Component, inject, type OnInit, signal } from '@angular/core'
+import { ActivatedRoute } from '@angular/router'
+import { ApiService, NavigationService } from '@core'
 import {
-  injectQuery,
   injectMutation,
-} from "@tanstack/angular-query-experimental";
-import type { Post } from "@core";
+  injectQuery,
+} from '@tanstack/angular-query-experimental'
+import { NzButtonModule } from 'ng-zorro-antd/button'
+import { NzCardModule } from 'ng-zorro-antd/card'
+import { NzDividerModule } from 'ng-zorro-antd/divider'
+import { NzIconModule } from 'ng-zorro-antd/icon'
+import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm'
+import { NzSpaceModule } from 'ng-zorro-antd/space'
 
 @Component({
-  selector: "app-post-show",
+  selector: 'app-post-show',
   standalone: true,
   imports: [
     CommonModule,
@@ -26,49 +25,49 @@ import type { Post } from "@core";
     NzDividerModule,
     NzPopconfirmModule,
   ],
-  templateUrl: "./post-show.component.html",
-  styleUrl: "./post-show.component.css",
+  templateUrl: './post-show.component.html',
+  styleUrl: './post-show.component.css',
 })
 export class PostShowComponent implements OnInit {
-  private route = inject(ActivatedRoute);
-  private navigationService = inject(NavigationService);
-  private apiService = inject(ApiService);
+  private route = inject(ActivatedRoute)
+  private navigationService = inject(NavigationService)
+  private apiService = inject(ApiService)
 
-  postId = signal<number>(0);
+  postId = signal<number>(0)
 
   postQuery = injectQuery(() => ({
-    queryKey: ["post", this.postId()],
+    queryKey: ['post', this.postId()],
     queryFn: () => this.apiService.getPost(this.postId()),
     enabled: this.postId() > 0,
-  }));
+  }))
 
   deleteMutation = injectMutation(() => ({
     mutationFn: (id: number) => this.apiService.deletePost(id),
     onSuccess: () => {
-      this.goBack();
+      this.goBack()
     },
-  }));
+  }))
 
   ngOnInit() {
-    const id = Number(this.route.snapshot.paramMap.get("id"));
-    this.postId.set(id);
+    const id = Number(this.route.snapshot.paramMap.get('id'))
+    this.postId.set(id)
   }
 
   goBack() {
-    this.navigationService.goToList("posts");
+    this.navigationService.goToList('posts')
   }
 
   editPost() {
-    const currentPost = this.postQuery.data();
+    const currentPost = this.postQuery.data()
     if (currentPost) {
-      this.navigationService.goToEdit("posts", currentPost.id.toString());
+      this.navigationService.goToEdit('posts', currentPost.id.toString())
     }
   }
 
   deletePost() {
-    const currentPost = this.postQuery.data();
+    const currentPost = this.postQuery.data()
     if (currentPost) {
-      this.deleteMutation.mutate(currentPost.id);
+      this.deleteMutation.mutate(currentPost.id)
     }
   }
 }

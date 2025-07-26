@@ -1,6 +1,5 @@
-import { Component, inject, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { PostModalService } from '@features/posts/services/post-modal.service';
+import { Component, inject, type OnInit } from '@angular/core'
+import { PostModalService } from '@features/posts/services/post-modal.service'
 
 @Component({
   selector: 'app-post-create-route',
@@ -8,10 +7,10 @@ import { PostModalService } from '@features/posts/services/post-modal.service';
   template: '',
 })
 export class PostCreateRouteComponent implements OnInit {
-  private postModalService = inject(PostModalService);
+  private postModalService = inject(PostModalService)
 
   ngOnInit() {
     // Open the create modal when this route is activated
-    this.postModalService.openCreateModal();
+    this.postModalService.openCreateModal()
   }
 }

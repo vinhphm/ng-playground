@@ -1,14 +1,19 @@
-import { Component, inject, signal } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
-import { NzFormModule } from 'ng-zorro-antd/form';
-import { NzInputModule } from 'ng-zorro-antd/input';
-import { NzButtonModule } from 'ng-zorro-antd/button';
-import { NzIconModule } from 'ng-zorro-antd/icon';
-import { NzSpaceModule } from 'ng-zorro-antd/space';
-import { NzCardModule } from 'ng-zorro-antd/card';
-import { NzMessageService } from 'ng-zorro-antd/message';
-import { NavigationService } from '@core/services';
+import { CommonModule } from '@angular/common'
+import { Component, inject, signal } from '@angular/core'
+import {
+  FormBuilder,
+  type FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms'
+import { NavigationService } from '@core/services'
+import { NzButtonModule } from 'ng-zorro-antd/button'
+import { NzCardModule } from 'ng-zorro-antd/card'
+import { NzFormModule } from 'ng-zorro-antd/form'
+import { NzIconModule } from 'ng-zorro-antd/icon'
+import { NzInputModule } from 'ng-zorro-antd/input'
+import { NzMessageService } from 'ng-zorro-antd/message'
+import { NzSpaceModule } from 'ng-zorro-antd/space'
 
 @Component({
   selector: 'app-post-create',
@@ -21,7 +26,7 @@ import { NavigationService } from '@core/services';
     NzButtonModule,
     NzIconModule,
     NzSpaceModule,
-    NzCardModule
+    NzCardModule,
   ],
   template: `
     <div class="page-header">
@@ -83,7 +88,8 @@ import { NavigationService } from '@core/services';
       </form>
     </nz-card>
   `,
-  styles: [`
+  styles: [
+    `
     .page-header {
       display: flex;
       justify-content: space-between;
@@ -102,46 +108,47 @@ import { NavigationService } from '@core/services';
     textarea {
       resize: vertical;
     }
-  `]
+  `,
+  ],
 })
 export class PostCreateComponent {
-  private fb = inject(FormBuilder);
-  private navigationService = inject(NavigationService);
-  private message = inject(NzMessageService);
+  private fb = inject(FormBuilder)
+  private navigationService = inject(NavigationService)
+  private message = inject(NzMessageService)
 
-  submitting = signal(false);
+  submitting = signal(false)
 
   postForm: FormGroup = this.fb.group({
     title: ['', [Validators.required, Validators.minLength(3)]],
     author: ['', [Validators.required, Validators.minLength(2)]],
-    content: ['', [Validators.required, Validators.minLength(10)]]
-  });
+    content: ['', [Validators.required, Validators.minLength(10)]],
+  })
 
   onSubmit() {
     if (this.postForm.valid) {
-      this.submitting.set(true);
+      this.submitting.set(true)
 
       // Simulate API call
       setTimeout(() => {
-        this.submitting.set(false);
-        this.message.success('Post created successfully!');
-        this.goBack();
-      }, 1000);
+        this.submitting.set(false)
+        this.message.success('Post created successfully!')
+        this.goBack()
+      }, 1000)
     } else {
-      Object.values(this.postForm.controls).forEach(control => {
+      for (const control of Object.values(this.postForm.controls)) {
         if (control.invalid) {
-          control.markAsDirty();
-          control.updateValueAndValidity({ onlySelf: true });
+          control.markAsDirty()
+          control.updateValueAndValidity({ onlySelf: true })
         }
-      });
+      }
     }
   }
 
   resetForm() {
-    this.postForm.reset();
+    this.postForm.reset()
   }
 
   goBack() {
-    this.navigationService.goToList('posts');
+    this.navigationService.goToList('posts')
   }
 }

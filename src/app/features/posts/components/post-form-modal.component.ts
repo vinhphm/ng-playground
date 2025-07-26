@@ -1,24 +1,29 @@
-import { Component, inject, signal, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
-import { NzFormModule } from 'ng-zorro-antd/form';
-import { NzInputModule } from 'ng-zorro-antd/input';
-import { NzButtonModule } from 'ng-zorro-antd/button';
-import { NzIconModule } from 'ng-zorro-antd/icon';
-import { NzMessageService } from 'ng-zorro-antd/message';
-import { NZ_MODAL_DATA, NzModalRef } from 'ng-zorro-antd/modal';
+import { CommonModule } from '@angular/common'
+import { Component, inject, type OnInit, signal } from '@angular/core'
+import {
+  FormBuilder,
+  type FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms'
+import { NzButtonModule } from 'ng-zorro-antd/button'
+import { NzFormModule } from 'ng-zorro-antd/form'
+import { NzIconModule } from 'ng-zorro-antd/icon'
+import { NzInputModule } from 'ng-zorro-antd/input'
+import { NzMessageService } from 'ng-zorro-antd/message'
+import { NZ_MODAL_DATA, NzModalRef } from 'ng-zorro-antd/modal'
 
 interface Post {
-  id: number;
-  title: string;
-  content: string;
-  author: string;
-  createdAt: Date;
+  id: number
+  title: string
+  content: string
+  author: string
+  createdAt: Date
 }
 
 interface ModalData {
-  mode: 'create' | 'edit';
-  post?: Post;
+  mode: 'create' | 'edit'
+  post?: Post
 }
 
 @Component({
@@ -30,7 +35,7 @@ interface ModalData {
     NzFormModule,
     NzInputModule,
     NzButtonModule,
-    NzIconModule
+    NzIconModule,
   ],
   template: `
     <form nz-form [formGroup]="postForm" (ngSubmit)="onSubmit()">
@@ -62,73 +67,75 @@ interface ModalData {
       </nz-form-item>
     </form>
   `,
-  styles: [`
+  styles: [
+    `
     textarea {
       resize: vertical;
     }
-  `]
+  `,
+  ],
 })
 export class PostFormModalComponent implements OnInit {
-  private fb = inject(FormBuilder);
-  private modal = inject(NzModalRef);
-  private message = inject(NzMessageService);
-  private modalData = inject(NZ_MODAL_DATA) as ModalData;
-  
-  submitting = signal(false);
-  isEditMode = signal(false);
-  
+  private fb = inject(FormBuilder)
+  private modal = inject(NzModalRef)
+  private message = inject(NzMessageService)
+  private modalData = inject(NZ_MODAL_DATA) as ModalData
+
+  submitting = signal(false)
+  isEditMode = signal(false)
+
   postForm: FormGroup = this.fb.group({
     title: ['', [Validators.required, Validators.minLength(3)]],
     author: ['', [Validators.required, Validators.minLength(2)]],
-    content: ['', [Validators.required, Validators.minLength(10)]]
-  });
+    content: ['', [Validators.required, Validators.minLength(10)]],
+  })
 
   ngOnInit() {
-    this.isEditMode.set(this.modalData.mode === 'edit');
-    
+    this.isEditMode.set(this.modalData.mode === 'edit')
+
     if (this.isEditMode() && this.modalData.post) {
       this.postForm.patchValue({
         title: this.modalData.post.title,
         author: this.modalData.post.author,
-        content: this.modalData.post.content
-      });
+        content: this.modalData.post.content,
+      })
     }
   }
 
   onSubmit() {
     if (this.postForm.valid) {
-      this.submitting.set(true);
-      
+      this.submitting.set(true)
+
       // Simulate API call
       setTimeout(() => {
-        this.submitting.set(false);
-        const action = this.isEditMode() ? 'updated' : 'created';
-        this.message.success(`Post ${action} successfully!`);
-        this.modal.close(this.postForm.value);
-      }, 1000);
+        this.submitting.set(false)
+        const action = this.isEditMode() ? 'updated' : 'created'
+        this.message.success(`Post ${action} successfully!`)
+        this.modal.close(this.postForm.value)
+      }, 1000)
     } else {
-      Object.values(this.postForm.controls).forEach(control => {
+      for (const control of Object.values(this.postForm.controls)) {
         if (control.invalid) {
-          control.markAsDirty();
-          control.updateValueAndValidity({ onlySelf: true });
+          control.markAsDirty()
+          control.updateValueAndValidity({ onlySelf: true })
         }
-      });
+      }
     }
   }
 
   onCancel() {
-    this.modal.close();
+    this.modal.close()
   }
 
   get submitButtonText(): string {
-    return this.isEditMode() ? 'Update Post' : 'Create Post';
+    return this.isEditMode() ? 'Update Post' : 'Create Post'
   }
 
   get isFormValid(): boolean {
-    return this.postForm.valid;
+    return this.postForm.valid
   }
 
   get isSubmitting(): boolean {
-    return this.submitting();
+    return this.submitting()
   }
 }

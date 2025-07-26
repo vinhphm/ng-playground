@@ -1,1 +1,1 @@
-export * from './resource.types';
+export * from './resource.types'

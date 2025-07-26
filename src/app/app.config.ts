@@ -1,49 +1,55 @@
-import { ApplicationConfig, provideBrowserGlobalErrorListeners, provideZoneChangeDetection, importProvidersFrom } from '@angular/core';
-import { provideRouter } from '@angular/router';
-import { FormsModule } from '@angular/forms';
-import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
-import { provideHttpClient } from '@angular/common/http';
-import { en_US, provideNzI18n } from 'ng-zorro-antd/i18n';
-import { provideNzIcons } from 'ng-zorro-antd/icon';
-import { NzModalService } from 'ng-zorro-antd/modal';
-import { registerLocaleData } from '@angular/common';
-import en from '@angular/common/locales/en';
-import { provideTanStackQuery, QueryClient } from '@tanstack/angular-query-experimental';
-
+import { registerLocaleData } from '@angular/common'
+import { provideHttpClient } from '@angular/common/http'
+import en from '@angular/common/locales/en'
+import {
+  type ApplicationConfig,
+  importProvidersFrom,
+  provideBrowserGlobalErrorListeners,
+  provideZoneChangeDetection,
+} from '@angular/core'
+import { FormsModule } from '@angular/forms'
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async'
+import { provideRouter } from '@angular/router'
 // Import required icons
-import { 
-  UserOutline, 
-  FileTextOutline, 
-  MessageOutline, 
-  EyeOutline, 
-  EditOutline, 
-  DeleteOutline, 
-  PlusOutline, 
-  ArrowLeftOutline, 
-  SaveOutline, 
-  ReloadOutline,
+import {
+  ArrowLeftOutline,
+  DeleteOutline,
+  EditOutline,
+  EyeOutline,
+  FileTextOutline,
   MenuFoldOutline,
-  MenuUnfoldOutline
-} from '@ant-design/icons-angular/icons';
+  MenuUnfoldOutline,
+  MessageOutline,
+  PlusOutline,
+  ReloadOutline,
+  SaveOutline,
+  UserOutline,
+} from '@ant-design/icons-angular/icons'
+import { routes } from '@app/app.routes'
+import {
+  provideTanStackQuery,
+  QueryClient,
+} from '@tanstack/angular-query-experimental'
+import { en_US, provideNzI18n } from 'ng-zorro-antd/i18n'
+import { provideNzIcons } from 'ng-zorro-antd/icon'
+import { NzModalService } from 'ng-zorro-antd/modal'
 
-import { routes } from '@app/app.routes';
-
-registerLocaleData(en);
+registerLocaleData(en)
 
 const icons = [
-  UserOutline, 
-  FileTextOutline, 
-  MessageOutline, 
-  EyeOutline, 
-  EditOutline, 
-  DeleteOutline, 
-  PlusOutline, 
-  ArrowLeftOutline, 
-  SaveOutline, 
+  UserOutline,
+  FileTextOutline,
+  MessageOutline,
+  EyeOutline,
+  EditOutline,
+  DeleteOutline,
+  PlusOutline,
+  ArrowLeftOutline,
+  SaveOutline,
   ReloadOutline,
   MenuFoldOutline,
-  MenuUnfoldOutline
-];
+  MenuUnfoldOutline,
+]
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -56,13 +62,15 @@ export const appConfig: ApplicationConfig = {
     provideNzIcons(icons),
     importProvidersFrom(FormsModule),
     NzModalService,
-    provideTanStackQuery(new QueryClient({
-      defaultOptions: {
-        queries: {
-          staleTime: 5 * 60 * 1000, // 5 minutes
-          refetchOnWindowFocus: false,
+    provideTanStackQuery(
+      new QueryClient({
+        defaultOptions: {
+          queries: {
+            staleTime: 5 * 60 * 1000, // 5 minutes
+            refetchOnWindowFocus: false,
+          },
         },
-      },
-    }))
-  ]
-};
+      })
+    ),
+  ],
+}
