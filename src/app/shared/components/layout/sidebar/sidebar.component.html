@@ -1,6 +1,6 @@
-<nz-sider 
-  nzCollapsible 
-  [nzCollapsed]="isCollapsed" 
+<nz-sider
+  nzCollapsible
+  [nzCollapsed]="isCollapsed"
   [nzWidth]="200"
   [nzCollapsedWidth]="80"
   (nzCollapsedChange)="onCollapsedChange($event)">
@@ -9,25 +9,25 @@
       @if (!isCollapsed) {
         <h3>NG Playground</h3>
       } @else {
-        <span>NR</span>
+        <span>NP</span>
       }
     </div>
     <div class="menu-container">
       <ul nz-menu nzTheme="dark" nzMode="inline" [nzInlineCollapsed]="isCollapsed" class="main-menu">
         @for (resource of menuItems(); track resource.name) {
           @if (resource.children && resource.children.length > 0) {
-            <li nz-submenu 
+            <li nz-submenu
                 [nzTitle]="resource.meta?.label || resource.name"
                 [nzIcon]="resource.meta?.icon || null">
               <ul>
-                <li nz-menu-item 
+                <li nz-menu-item
                     (click)="navigateToResource(resource.name, 'list')"
                     [nzSelected]="isCurrentRoute(resource.name, 'list')">
                   <nz-icon nzType="unordered-list"></nz-icon>
                   <span>List</span>
                 </li>
                 @for (child of resource.children; track child.name) {
-                  <li nz-menu-item 
+                  <li nz-menu-item
                       (click)="navigateToNestedResource(resource.name, child.name, 'list')"
                       [nzSelected]="isCurrentRoute(child.name, 'list')">
                     @if (child.meta?.icon; as icon) {
@@ -39,7 +39,7 @@
               </ul>
             </li>
           } @else {
-            <li nz-menu-item 
+            <li nz-menu-item
                 (click)="navigateToResource(resource.name, 'list')"
                 [nzSelected]="isCurrentRoute(resource.name, 'list')">
               @if (resource.meta?.icon; as icon) {
