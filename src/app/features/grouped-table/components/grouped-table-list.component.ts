@@ -20,12 +20,12 @@ import {
   createAngularTable,
   FlexRenderDirective,
   type GroupingState,
-  type PaginationState,
   getCoreRowModel,
   getExpandedRowModel,
   getFilteredRowModel,
   getGroupedRowModel,
   getPaginationRowModel,
+  type PaginationState,
   type Updater,
 } from '@tanstack/angular-table'
 import { NzButtonModule } from 'ng-zorro-antd/button'
@@ -34,10 +34,10 @@ import { NzDividerModule } from 'ng-zorro-antd/divider'
 import { NzIconModule } from 'ng-zorro-antd/icon'
 import { NzInputModule } from 'ng-zorro-antd/input'
 import { NzPageHeaderModule } from 'ng-zorro-antd/page-header'
+import { NzPaginationModule } from 'ng-zorro-antd/pagination'
 import { NzSpaceModule } from 'ng-zorro-antd/space'
 import { NzTableModule } from 'ng-zorro-antd/table'
 import { NzTagModule } from 'ng-zorro-antd/tag'
-import { NzPaginationModule } from 'ng-zorro-antd/pagination'
 
 @Component({
   selector: 'app-grouped-table-list',
