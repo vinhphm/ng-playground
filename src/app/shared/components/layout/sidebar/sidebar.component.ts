@@ -49,9 +49,7 @@ export class SidebarComponent {
     }
 
     const currentResource = snapshot.data['resource'] as string | undefined
-    const parentResource = snapshot.data['parentResource'] as
-      | string
-      | undefined
+    const parentResource = snapshot.data['parentResource'] as string | undefined
 
     if (currentResource) {
       return currentResource === resource || parentResource === resource

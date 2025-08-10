@@ -251,30 +251,23 @@
     </tbody>
   </nz-table>
 
-  <!-- Table Footer with Stats -->
-  <nz-divider></nz-divider>
-  <div class="flex justify-between items-center text-sm text-gray-600">
-    <span>
-      Showing {{ table.getRowModel().rows.length }} rows
-      @if (grouping().length > 0) {
-        | Grouped by {{ grouping().length }} column{{ grouping().length > 1 ? 's' : '' }}
-      }
-    </span>
-    <div class="flex space-x-4">
-      <span>Total Data: {{ data.length }}</span>
-      @if (grouping().length > 0) {
-        <span>Groups: {{ table.getGroupedRowModel().rows.length }}</span>
-      } @else {
-        <span>Groups: 0</span>
-      }
-    </div>
+  <!-- Pagination Controls -->
+  <div class="mt-4 flex justify-end items-center">
+    <nz-pagination
+      nzSize="small"
+      [nzPageIndex]="pagination().pageIndex + 1"
+      [nzPageSize]="pagination().pageSize"
+      [nzTotal]="data.length"
+      [nzShowSizeChanger]="true"
+      [nzShowQuickJumper]="true"
+      [nzPageSizeOptions]="[10, 20, 50, 100]"
+      [nzShowTotal]="totalTemplate"
+      (nzPageIndexChange)="onPageIndexChange($event)"
+      (nzPageSizeChange)="onPageSizeChange($event)"
+    ></nz-pagination>
   </div>
 
-  <div class="mt-4 text-sm text-gray-600">
-    <strong>Drag & Drop Instructions:</strong>
-    Drag column headers (with <nz-icon nzType="drag" class="inline text-xs"></nz-icon> icon) to the drop zone above to group by that column.
-    Drag groups in the drop zone to reorder them or click ✕ to remove.
-    Use ➕/➖ buttons to expand/collapse grouped rows.
-    Try dragging Department, then Status for multi-level grouping.
-  </div>
+  <ng-template #totalTemplate let-total let-range="range">
+    {{ range[0] }}-{{ range[1] }} of {{ total }} items
+  </ng-template>
 </nz-card>
