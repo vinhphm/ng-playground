@@ -8,6 +8,7 @@ import {
   PostShowComponent,
 } from '@features/posts'
 import { UserListComponent, UserShowComponent } from '@features/users'
+import { GroupedTableListContainerComponent } from '@features/grouped-table'
 import { MainLayoutComponent } from '@shared/components'
 
 @Component({
@@ -47,6 +48,11 @@ export class App implements OnInit {
         list: UserListComponent,
         show: UserShowComponent,
         meta: { icon: 'team', label: 'Users' },
+      },
+      {
+        name: 'grouped-table',
+        list: GroupedTableListContainerComponent,
+        meta: { icon: 'table', label: 'Grouped Table' },
       },
     ])
 

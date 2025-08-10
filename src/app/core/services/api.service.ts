@@ -33,6 +33,21 @@ export interface User {
   }
 }
 
+export interface SampleData {
+  id: number
+  name: string
+  department: string
+  position: string
+  status: 'active' | 'inactive' | 'pending'
+  salary: number
+  hireDate: string
+  email: string
+  age: number
+  city: string
+  country: string
+  experience: number
+}
+
 @Injectable({
   providedIn: 'root',
 })
@@ -136,5 +151,44 @@ export class ApiService {
     } catch {
       return false
     }
+  }
+
+  // Sample Data API (Mock Data)
+  private generateMockSampleData(): SampleData[] {
+    const departments = ['Engineering', 'Sales', 'Marketing', 'HR', 'Finance']
+    const positions = ['Manager', 'Senior Developer', 'Junior Developer', 'Analyst', 'Director']
+    const statuses: ('active' | 'inactive' | 'pending')[] = ['active', 'inactive', 'pending']
+    const cities = ['New York', 'San Francisco', 'London', 'Tokyo', 'Berlin', 'Paris']
+    const countries = ['USA', 'UK', 'Japan', 'Germany', 'France', 'Canada']
+    const names = [
+      'Alice Johnson', 'Bob Smith', 'Charlie Brown', 'Diana Prince', 'Ethan Hunt',
+      'Fiona Davis', 'George Wilson', 'Hannah Lee', 'Ian Malcolm', 'Julia Roberts',
+      'Kevin Hart', 'Linda Taylor', 'Michael Scott', 'Nina Patel', 'Oliver Stone',
+      'Patricia White', 'Quinn Adams', 'Rachel Green', 'Samuel Jackson', 'Tina Fey',
+      'Victor Hugo', 'Wendy Davis', 'Xavier Lewis', 'Yara Martinez', 'Zoe Clark'
+    ]
+
+    return names.map((name, index) => ({
+      id: index + 1,
+      name,
+      department: departments[index % departments.length],
+      position: positions[index % positions.length],
+      status: statuses[index % statuses.length],
+      salary: 45000 + (index * 2000) + Math.floor(Math.random() * 20000),
+      hireDate: new Date(2020 + Math.floor(Math.random() * 4), Math.floor(Math.random() * 12), Math.floor(Math.random() * 28)).toISOString().split('T')[0],
+      email: `${name.toLowerCase().replace(' ', '.')}@company.com`,
+      age: 25 + Math.floor(Math.random() * 35),
+      city: cities[index % cities.length],
+      country: countries[index % countries.length],
+      experience: Math.floor(Math.random() * 15) + 1
+    }))
+  }
+
+  async getSampleData(): Promise<SampleData[]> {
+    return new Promise(resolve => {
+      setTimeout(() => {
+        resolve(this.generateMockSampleData())
+      }, 500)
+    })
   }
 }

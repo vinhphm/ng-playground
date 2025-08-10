@@ -15,6 +15,7 @@
         "@ant-design/icons-angular": "^20.0.0",
         "@tailwindcss/postcss": "^4.1.11",
         "@tanstack/angular-query-experimental": "^5.83.0",
+        "@tanstack/angular-table": "^8.21.3",
         "ng-zorro-antd": "^20.0.0",
         "postcss": "^8.5.6",
         "rxjs": "~7.8.0",
@@ -465,9 +466,13 @@
 
     "@tanstack/angular-query-experimental": ["@tanstack/angular-query-experimental@5.83.0", "", { "dependencies": { "@tanstack/query-core": "5.83.0", "@tanstack/query-devtools": "5.81.2" }, "peerDependencies": { "@angular/common": ">=16.0.0", "@angular/core": ">=16.0.0" } }, "sha512-MMB189P5EoJ9hKzn9dKdN3Auc531JPu/FWZZJk4qhkTDsuiyXh2BR0WRnD9PedLKn+bsL3rMyfzWUnbwGbhTIQ=="],
 
+    "@tanstack/angular-table": ["@tanstack/angular-table@8.21.3", "", { "dependencies": { "@tanstack/table-core": "8.21.3", "tslib": "^2.6.2" }, "peerDependencies": { "@angular/core": ">=17" } }, "sha512-8VqEGObnTBNJm3qQSPy+WEGqjXDLesEPSnBTEHdbHFh1rMP1pQsgI85Dwy8OX4kB82wIDvJuw4LceGIXZEbotA=="],
+
     "@tanstack/query-core": ["@tanstack/query-core@5.83.0", "", {}, "sha512-0M8dA+amXUkyz5cVUm/B+zSk3xkQAcuXuz5/Q/LveT4ots2rBpPTZOzd7yJa2Utsf8D2Upl5KyjhHRY+9lB/XA=="],
 
     "@tanstack/query-devtools": ["@tanstack/query-devtools@5.81.2", "", {}, "sha512-jCeJcDCwKfoyyBXjXe9+Lo8aTkavygHHsUHAlxQKKaDeyT0qyQNLKl7+UyqYH2dDF6UN/14873IPBHchcsU+Zg=="],
+
+    "@tanstack/table-core": ["@tanstack/table-core@8.21.3", "", {}, "sha512-ldZXEhOBb8Is7xLs01fR3YEc3DERiz5silj8tnGkFZytt1abEvl/GhUmCE0PMLaMPTa3Jk4HbKmRlHmu+gCftg=="],
 
     "@tufjs/canonical-json": ["@tufjs/canonical-json@2.0.0", "", {}, "sha512-yVtV8zsdo8qFHe+/3kw81dSLyF7D576A5cCFCi4X7B39tWT7SekaEFUnvnWJHz+9qO7qJTah1JbrDjWKqFtdWA=="],
 

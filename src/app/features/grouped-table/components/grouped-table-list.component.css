@@ -1,0 +1,101 @@
+/* Table styling */
+table {
+  border-spacing: 0;
+  table-layout: fixed;
+}
+
+/* Table cell constraints */
+td {
+  word-wrap: break-word;
+  word-break: break-word;
+  max-width: 200px;
+  overflow-wrap: break-word;
+}
+
+/* Grouped cell specific styling */
+td.grouped-cell {
+  max-width: 300px;
+}
+
+/* Prevent text overflow in table cells */
+.nz-table-tbody > tr > td {
+  vertical-align: top;
+  word-break: break-word;
+  white-space: normal;
+}
+
+/* Header hover effects */
+th button:hover {
+  background-color: rgba(59, 130, 246, 0.1);
+  border-radius: 4px;
+}
+
+/* Row hover effects */
+tr:hover {
+  background-color: #f8fafc !important;
+}
+
+/* Grouped row indentation */
+.grouped-row {
+  padding-left: 2rem;
+}
+
+/* Status tag positioning */
+nz-tag {
+  margin: 0;
+}
+
+/* Table header width constraints */
+th {
+  min-width: 120px;
+  max-width: 200px;
+  word-break: break-word;
+}
+
+/* Ensure proper column widths */
+.nz-table-thead > tr > th,
+.nz-table-tbody > tr > td {
+  min-width: 120px;
+}
+
+/* Specific column width adjustments for grouped content */
+.nz-table-tbody > tr > td.grouped-cell {
+  min-width: 200px;
+  max-width: 350px;
+}
+
+/* Text truncation utilities */
+.truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Responsive table */
+@media (max-width: 768px) {
+  table {
+    min-width: 800px;
+  }
+  
+  th, td {
+    min-width: 80px;
+    font-size: 12px;
+  }
+  
+  .grouped-cell {
+    min-width: 150px;
+    max-width: 250px;
+  }
+}
+
+/* Button alignment */
+.flex.items-center {
+  align-items: center;
+}
+
+/* Pre-formatted text for grouping state */
+pre {
+  font-family: 'Courier New', monospace;
+  max-height: 200px;
+  overflow-y: auto;
+}
