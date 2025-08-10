@@ -7,7 +7,7 @@
   "name": "ng-playground",
   "compatibility_date": "2025-08-10",
   "assets": {
-    "directory": "./dist/browser",
+    "directory": "./dist/ng-playground/browser",
     "not_found_handling": "single-page-application"
   },
   "observability": {
