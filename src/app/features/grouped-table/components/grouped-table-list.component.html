@@ -257,7 +257,7 @@
       nzSize="small"
       [nzPageIndex]="pagination().pageIndex + 1"
       [nzPageSize]="pagination().pageSize"
-      [nzTotal]="data.length"
+      [nzTotal]="table.getPrePaginationRowModel().rows.length"
       [nzShowSizeChanger]="true"
       [nzShowQuickJumper]="true"
       [nzPageSizeOptions]="[10, 20, 50, 100]"

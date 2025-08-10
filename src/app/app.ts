@@ -1,4 +1,10 @@
-import { Component, inject, type OnInit, signal } from '@angular/core'
+import {
+  ChangeDetectionStrategy,
+  Component,
+  inject,
+  type OnInit,
+  signal,
+} from '@angular/core'
 import { Router } from '@angular/router'
 import { RefineRouterService, ResourceService } from '@core'
 import { GroupedTableListContainerComponent } from '@features/grouped-table'
@@ -16,6 +22,7 @@ import { MainLayoutComponent } from '@shared/components'
   imports: [MainLayoutComponent],
   template: '<app-main-layout></app-main-layout>',
   styleUrl: './app.css',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class App implements OnInit {
   private resourceService = inject(ResourceService)

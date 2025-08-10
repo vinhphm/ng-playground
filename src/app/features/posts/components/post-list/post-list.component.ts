@@ -1,5 +1,11 @@
 import { CommonModule } from '@angular/common'
-import { Component, EventEmitter, Input, Output } from '@angular/core'
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+} from '@angular/core'
 import { FormsModule } from '@angular/forms'
 import type { Post } from '@core'
 import { NzButtonModule } from 'ng-zorro-antd/button'
@@ -26,6 +32,7 @@ import { NzTableModule } from 'ng-zorro-antd/table'
   ],
   templateUrl: './post-list.component.html',
   styleUrl: './post-list.component.css',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PostListComponent {
   @Input() posts: Post[] = []

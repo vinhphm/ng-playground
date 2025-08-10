@@ -1,5 +1,10 @@
 import { CommonModule } from '@angular/common'
-import { Component, computed, inject } from '@angular/core'
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  inject,
+} from '@angular/core'
 import { FormsModule } from '@angular/forms'
 import { ApiService, NavigationService } from '@core'
 import {
@@ -32,6 +37,7 @@ import { NzTagModule } from 'ng-zorro-antd/tag'
   ],
   templateUrl: './user-list.component.html',
   styleUrl: './user-list.component.css',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class UserListComponent {
   private navigationService = inject(NavigationService)

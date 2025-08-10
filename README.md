@@ -1,59 +1,102 @@
-# NgRefine
+# ng-playground
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.1.1.
+An Angular 20 application implementing a resource-based admin framework with automatic route generation and modal-based CRUD operations.
 
-## Development server
+## Tech Stack
 
-To start a local development server, run:
+- **Angular 20** with standalone components
+- **Ng-Zorro** (Ant Design for Angular) for UI components
+- **TanStack Query** for data fetching and caching  
+- **TailwindCSS** for styling
+- **Bun** as package manager
+- **Biome** for linting and formatting
+- **Jasmine + Karma** for testing
+
+## Installation
+
+**Note: This project uses Bun as the package manager.**
 
 ```bash
+bun install
+```
+
+## Development
+
+### Available Scripts
+
+```bash
+# Start development server
+bun start
+# or
 ng serve
-```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
-
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
-```
-
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
-
-```bash
-ng generate --help
-```
-
-## Building
-
-To build the project run:
-
-```bash
+# Build project  
+bun run build
+# or
 ng build
-```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+# Watch mode for development
+bun run watch
+# or  
+ng build --watch --configuration development
 
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
-
-```bash
+# Run tests
+bun test
+# or
 ng test
+
+# Lint code
+bun run lint
+# or
+ultracite lint
+
+# Format code
+bun run format
+# or
+ultracite format
+
+# Deploy (builds and deploys to Cloudflare)
+bun run deploy
 ```
 
-## Running end-to-end tests
+The development server runs on `http://localhost:4200/` with automatic reload.
 
-For end-to-end (e2e) testing, run:
+## Project Structure
 
-```bash
-ng e2e
+```
+src/app/
+├── core/
+│   ├── services/
+│   │   ├── api.service.ts
+│   │   ├── navigation.service.ts
+│   │   ├── refine-router.service.ts
+│   │   └── resource.service.ts
+│   └── types/
+│       └── resource.types.ts
+├── features/
+│   ├── grouped-table/
+│   ├── posts/
+│   └── users/
+├── shared/
+│   └── components/
+│       └── layout/
+│           ├── main-layout/
+│           └── sidebar/
+├── app.config.ts
+├── app.routes.ts
+└── app.ts
 ```
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+## Architecture
 
-## Additional Resources
+This application uses a resource-based approach where entities (posts, users) are registered with their associated components. The `ResourceService` manages resource registration and the `RefineRouterService` automatically generates Angular routes.
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+Features are organized by domain in the `features/` directory, with components following a separation between container (data-fetching) and presentation components.
+
+## Deployment
+
+The project is configured for deployment to Cloudflare Pages using Wrangler. The built files from `dist/ng-playground/browser` are deployed as a single-page application.
+
+## Documentation
+
+For detailed development guidelines and architecture information, see [CLAUDE.md](./CLAUDE.md).
