@@ -10,6 +10,7 @@ import { NzCardModule } from 'ng-zorro-antd/card'
 import { NzDividerModule } from 'ng-zorro-antd/divider'
 import { NzTableModule } from 'ng-zorro-antd/table'
 import { NzSpaceModule } from 'ng-zorro-antd/space'
+import { DragDropModule, CdkDropList, CdkDrag, CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop'
 
 import {
   createAngularTable,
@@ -40,6 +41,7 @@ import {
     NzTableModule,
     NzSpaceModule,
     FlexRenderDirective,
+    DragDropModule,
   ],
   templateUrl: './grouped-table-list.component.html',
   styleUrl: './grouped-table-list.component.css',
@@ -160,8 +162,6 @@ export class GroupedTableListComponent {
   }
 
   globalFilter = ''
-  draggedColumn: string | null = null
-  dropZoneActive = signal(false)
 
   clearAllGrouping() {
     this.grouping.set([])
@@ -177,60 +177,35 @@ export class GroupedTableListComponent {
     }
   }
 
-  // Drag and Drop functionality
-  onDragStart(event: DragEvent, columnId: string) {
-    this.draggedColumn = columnId
+  // Angular CDK Drag and Drop for group reordering
+  dropGrouping(event: CdkDragDrop<string[]>) {
+    if (event.previousIndex !== event.currentIndex) {
+      const newGrouping = [...this.grouping()]
+      moveItemInArray(newGrouping, event.previousIndex, event.currentIndex)
+      this.grouping.set(newGrouping)
+    }
+  }
+
+  // Column header drag and drop for adding new groups
+  onColumnDragStart(event: DragEvent, columnId: string) {
     if (event.dataTransfer) {
       event.dataTransfer.effectAllowed = 'move'
       event.dataTransfer.setData('text/plain', columnId)
     }
   }
 
-  onDragEnd() {
-    this.draggedColumn = null
-    this.dropZoneActive.set(false)
-  }
-
   onDropZoneDragOver(event: DragEvent) {
     event.preventDefault()
-    this.dropZoneActive.set(true)
     if (event.dataTransfer) {
       event.dataTransfer.dropEffect = 'move'
     }
   }
 
-  onDropZoneDragLeave() {
-    this.dropZoneActive.set(false)
-  }
-
   onDropZoneDrop(event: DragEvent) {
     event.preventDefault()
-    this.dropZoneActive.set(false)
-    
     const columnId = event.dataTransfer?.getData('text/plain')
     if (columnId && !this.grouping().includes(columnId)) {
       const newGrouping = [...this.grouping(), columnId]
-      this.grouping.set(newGrouping)
-    }
-  }
-
-  onGroupTagDragStart(event: DragEvent, columnId: string, index: number) {
-    if (event.dataTransfer) {
-      event.dataTransfer.effectAllowed = 'move'
-      event.dataTransfer.setData('text/plain', columnId)
-      event.dataTransfer.setData('text/index', index.toString())
-    }
-  }
-
-  onGroupTagDrop(event: DragEvent, targetIndex: number) {
-    event.preventDefault()
-    const draggedColumnId = event.dataTransfer?.getData('text/plain')
-    const draggedIndex = parseInt(event.dataTransfer?.getData('text/index') || '-1')
-    
-    if (draggedColumnId && draggedIndex !== -1 && draggedIndex !== targetIndex) {
-      const newGrouping = [...this.grouping()]
-      const [removed] = newGrouping.splice(draggedIndex, 1)
-      newGrouping.splice(targetIndex, 0, removed)
       this.grouping.set(newGrouping)
     }
   }

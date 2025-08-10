@@ -1,3 +1,5 @@
+@import "tailwindcss" reference;
+
 /* Table styling */
 table {
   border-spacing: 0;
@@ -6,69 +8,59 @@ table {
 
 /* Table cell constraints */
 td {
-  word-wrap: break-word;
-  word-break: break-word;
-  max-width: 200px;
+  @apply break-words max-w-[200px];
   overflow-wrap: break-word;
 }
 
 /* Grouped cell specific styling */
 td.grouped-cell {
-  max-width: 300px;
+  @apply max-w-[300px];
 }
 
 /* Prevent text overflow in table cells */
-.nz-table-tbody > tr > td {
-  vertical-align: top;
-  word-break: break-word;
-  white-space: normal;
+.nz-table-tbody>tr>td {
+  @apply align-top break-words whitespace-normal;
 }
 
 /* Header hover effects */
 th button:hover {
-  background-color: rgba(59, 130, 246, 0.1);
-  border-radius: 4px;
+  @apply bg-blue-500/10 rounded;
 }
 
 /* Row hover effects */
 tr:hover {
-  background-color: #f8fafc !important;
+  @apply !bg-slate-50;
 }
 
 /* Grouped row indentation */
 .grouped-row {
-  padding-left: 2rem;
+  @apply pl-8;
 }
 
 /* Status tag positioning */
 nz-tag {
-  margin: 0;
+  @apply m-0;
 }
 
 /* Table header width constraints */
 th {
-  min-width: 120px;
-  max-width: 200px;
-  word-break: break-word;
+  @apply min-w-[120px] max-w-[200px] break-words;
 }
 
 /* Ensure proper column widths */
-.nz-table-thead > tr > th,
-.nz-table-tbody > tr > td {
-  min-width: 120px;
+.nz-table-thead>tr>th,
+.nz-table-tbody>tr>td {
+  @apply min-w-[120px];
 }
 
 /* Specific column width adjustments for grouped content */
-.nz-table-tbody > tr > td.grouped-cell {
-  min-width: 200px;
-  max-width: 350px;
+.nz-table-tbody>tr>td.grouped-cell {
+  @apply min-w-[200px] max-w-[350px];
 }
 
 /* Text truncation utilities */
 .truncate {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  @apply overflow-hidden text-ellipsis whitespace-nowrap;
 }
 
 /* Responsive table */
@@ -76,102 +68,184 @@ th {
   table {
     min-width: 800px;
   }
-  
-  th, td {
-    min-width: 80px;
-    font-size: 12px;
+
+  th,
+  td {
+    @apply min-w-[80px] text-xs;
   }
-  
+
   .grouped-cell {
-    min-width: 150px;
-    max-width: 250px;
+    @apply min-w-[150px] max-w-[250px];
   }
 }
 
 /* Button alignment */
 .flex.items-center {
-  align-items: center;
+  @apply items-center;
 }
 
 /* Pre-formatted text for grouping state */
 pre {
-  font-family: 'Courier New', monospace;
-  max-height: 200px;
-  overflow-y: auto;
+  @apply font-mono max-h-[200px] overflow-y-auto;
 }
 
 /* Drag and Drop Styles */
 .drag-handle {
-  cursor: grab;
-  transition: all 0.2s ease;
+  @apply cursor-grab transition-all duration-200 ease-in-out;
 }
 
 .drag-handle:active {
-  cursor: grabbing;
+  @apply cursor-grabbing;
 }
 
 .drag-handle:hover {
-  background-color: rgba(59, 130, 246, 0.1);
+  @apply bg-blue-500/10;
 }
 
 .drop-zone {
-  transition: all 0.3s ease;
-  min-height: 60px;
+  @apply transition-all duration-300 ease-in-out min-h-[60px];
 }
 
 .drop-zone.active {
-  border-color: #3b82f6 !important;
-  background-color: #eff6ff !important;
-  transform: scale(1.02);
+  @apply !border-blue-600 !bg-blue-50 scale-[1.02];
 }
 
 .group-tag {
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  @apply transition-all duration-200 ease-in-out;
 }
 
 .group-tag:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  @apply -translate-y-px shadow-md;
 }
 
 /* Ensure group tags don't wrap content */
 nz-tag {
-  display: inline-flex !important;
-  align-items: center !important;
-  white-space: nowrap !important;
-  flex-shrink: 0 !important;
+  @apply !inline-flex !items-center !whitespace-nowrap !flex-shrink-0;
 }
 
 nz-tag .ant-tag {
-  display: inline-flex !important;
-  align-items: center !important;
-  white-space: nowrap !important;
+  @apply !inline-flex !items-center !whitespace-nowrap;
+}
+
+/* Apply drag hint styling to the actual nz-tag element */
+nz-tag.drag-hint-preview .ant-tag {
+  opacity: 0.6 !important;
+  border: 2px dashed #3b82f6 !important;
+  background-color: rgba(59, 130, 246, 0.1) !important;
+  color: rgba(59, 130, 246, 0.8) !important;
+}
+
+nz-tag.drag-hint-preview {
+  animation: pulse-hint 1.5s infinite;
 }
 
 .dragging {
-  opacity: 0.7;
-  transform: rotate(3deg);
+  @apply opacity-70 rotate-3;
 }
 
 .drag-ghost {
-  background-color: #f3f4f6;
-  border: 2px dashed #9ca3af;
-  opacity: 0.5;
+  @apply bg-gray-100 border-2 border-dashed border-gray-400 opacity-50;
 }
 
 /* Header draggable area styling */
 .draggable-header {
-  user-select: none;
-  transition: all 0.2s ease;
+  @apply select-none transition-all duration-200 ease-in-out;
 }
 
 .draggable-header:hover {
-  background-color: rgba(59, 130, 246, 0.05);
-  transform: translateY(-1px);
+  @apply bg-blue-500/5 -translate-y-px;
 }
 
 .draggable-header.dragging {
-  opacity: 0.5;
-  transform: rotate(2deg) scale(1.05);
-  z-index: 1000;
+  @apply opacity-50 rotate-2 scale-105 z-[1000];
+}
+
+/* Angular CDK Drag and Drop Styles */
+.cdk-drop-list {
+  @apply min-h-[40px];
+}
+
+.cdk-drag {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.cdk-drag:not(.cdk-drag-disabled) {
+  @apply cursor-move;
+}
+
+.cdk-drag-preview {
+  @apply shadow-xl rounded-md rotate-2;
+  animation: drag-shake 0.3s ease-in-out;
+}
+
+.cdk-drag-placeholder {
+  @apply opacity-60 rounded-md;
+  animation: pulse-placeholder 1s infinite;
+}
+
+.cdk-drag-animating {
+  transition: transform 300ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.drag-preview-template {
+  @apply pointer-events-none;
+}
+
+.drag-placeholder-template {
+  @apply opacity-40;
+}
+
+@keyframes drag-shake {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  25% {
+    transform: rotate(1deg);
+  }
+
+  75% {
+    transform: rotate(-1deg);
+  }
+
+  100% {
+    transform: rotate(2deg);
+  }
+}
+
+@keyframes pulse-placeholder {
+
+  0%,
+  100% {
+    opacity: 0.4;
+  }
+
+  50% {
+    opacity: 0.6;
+  }
+}
+
+/* Group tag states during drag operations */
+.dragging-group {
+  @apply !opacity-60 !rotate-2 !scale-[1.02] !shadow-xl !z-[1000];
+}
+
+.reorder-target {
+  @apply !bg-blue-500/10 !border-2 !border-dashed !border-blue-600 !scale-105;
+}
+
+/* Number badge styling - ensure circular shape */
+.rounded-full {
+  @apply aspect-square !flex !items-center !justify-center !min-w-4 !min-h-4 !p-0 !leading-none !text-[11px] !font-medium;
+  aspect-ratio: 1;
+}
+
+/* Specific styling for column header badges */
+.draggable-header .rounded-full {
+  @apply !w-4 !h-4 !min-w-4 !min-h-4;
+}
+
+/* Specific styling for group tag badges in drop zone */
+nz-tag .rounded-full {
+  @apply !w-4 !h-4 !min-w-4 !min-h-4 !text-[10px];
 }
