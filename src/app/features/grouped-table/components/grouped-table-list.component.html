@@ -17,8 +17,8 @@
     </ng-template>
   </div>
 
-  <!-- Grouping Control Section -->
-  <nz-card nzTitle="Column Grouping Controls" [nzExtra]="groupingExtra" class="mb-6">
+  <!-- Drag and Drop Grouping Section -->
+  <nz-card nzTitle="Drag & Drop Grouping" [nzExtra]="groupingExtra" class="mb-6">
     <ng-template #groupingExtra>
       <button 
         nz-button 
@@ -31,36 +31,83 @@
       </button>
     </ng-template>
 
-    <div class="mb-4">
-      <h4 class="text-sm font-medium text-gray-700 mb-2">Available Grouping Actions:</h4>
-      <nz-space nzWrap>
-        @for (header of table.getLeafHeaders(); track header.id) {
-          @if (header.column.getCanGroup()) {
-            <button
-              *nzSpaceItem
-              nz-button
-              [nzType]="header.column.getIsGrouped() ? 'primary' : 'default'"
-              nzSize="small"
-              (click)="header.column.toggleGrouping()"
-              [title]="header.column.getIsGrouped() ? 'Click to ungroup' : 'Click to group by ' + header.column.columnDef.header"
-            >
-              @if (header.column.getIsGrouped()) {
-                <span>🛑 {{ header.column.columnDef.header }} ({{ header.column.getGroupedIndex() }})</span>
-              } @else {
-                <span>👊 {{ header.column.columnDef.header }}</span>
-              }
-            </button>
-          }
-        }
-      </nz-space>
+    <!-- Drop Zone for Grouping -->
+    <div 
+      class="border-2 border-dashed rounded-lg p-4 mb-4 transition-all duration-200"
+      [class.border-blue-400]="dropZoneActive()"
+      [class.bg-blue-50]="dropZoneActive()"
+      [class.border-gray-300]="!dropZoneActive()"
+      [class.bg-gray-50]="!dropZoneActive() && grouping().length === 0"
+      (dragover)="onDropZoneDragOver($event)"
+      (dragleave)="onDropZoneDragLeave()"
+      (drop)="onDropZoneDrop($event)"
+    >
+      @if (grouping().length === 0) {
+        <div class="text-center text-gray-500 py-6">
+          <nz-icon nzType="drag" class="text-2xl mb-2"></nz-icon>
+          <p class="text-sm">Drag column headers here to group the table</p>
+          <p class="text-xs text-gray-400">You can drag multiple columns to create multi-level grouping</p>
+        </div>
+      } @else {
+        <div class="space-y-2">
+          <h4 class="text-sm font-medium text-gray-700 mb-3">Active Groups (drag to reorder):</h4>
+          <div class="flex flex-wrap gap-2">
+            @for (columnId of grouping(); track columnId; let i = $index) {
+              <nz-tag
+                nzColor="blue"
+                class="cursor-move px-3 py-2 text-sm font-medium select-none"
+                draggable="true"
+                (dragstart)="onGroupTagDragStart($event, columnId, i)"
+                (dragover)="$event.preventDefault()"
+                (drop)="onGroupTagDrop($event, i)"
+                [title]="'Group ' + (i + 1) + ': ' + getColumnHeader(columnId) + ' (drag to reorder)'"
+                style="display: inline-flex; align-items: center; gap: 8px; white-space: nowrap;"
+              >
+                <span class="bg-blue-600 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs flex-shrink-0">{{ i + 1 }}</span>
+                <span class="flex-shrink-0">{{ getColumnHeader(columnId) }}</span>
+                <button
+                  class="text-blue-300 hover:text-white flex-shrink-0"
+                  (click)="removeGrouping(columnId)"
+                  title="Remove grouping"
+                >
+                  <nz-icon nzType="close" nzTheme="outline"></nz-icon>
+                </button>
+              </nz-tag>
+            }
+          </div>
+          <div class="mt-3 text-xs text-gray-500">
+            💡 Drag groups to reorder them, or drag column headers from the table to add more groups
+          </div>
+        </div>
+      }
     </div>
 
-    @if (grouping().length > 0) {
-      <div class="mt-3">
-        <h4 class="text-sm font-medium text-gray-700 mb-2">Current Grouping:</h4>
-        <pre class="bg-gray-100 p-2 rounded text-xs max-h-20 overflow-y-auto">{{ stringifiedGrouping() }}</pre>
+    <!-- Alternative: Button Controls (kept for backup) -->
+    <details class="mt-4">
+      <summary class="text-sm text-gray-600 cursor-pointer hover:text-gray-800">Show button-based grouping controls</summary>
+      <div class="mt-3 p-3 bg-gray-50 rounded">
+        <nz-space nzWrap>
+          @for (header of table.getLeafHeaders(); track header.id) {
+            @if (header.column.getCanGroup()) {
+              <button
+                *nzSpaceItem
+                nz-button
+                [nzType]="header.column.getIsGrouped() ? 'primary' : 'default'"
+                nzSize="small"
+                (click)="header.column.toggleGrouping()"
+                [title]="header.column.getIsGrouped() ? 'Click to ungroup' : 'Click to group by ' + header.column.columnDef.header"
+              >
+                @if (header.column.getIsGrouped()) {
+                  <span>🛑 {{ header.column.columnDef.header }} ({{ header.column.getGroupedIndex() }})</span>
+                } @else {
+                  <span>👊 {{ header.column.columnDef.header }}</span>
+                }
+              </button>
+            }
+          }
+        </nz-space>
       </div>
-    }
+    </details>
   </nz-card>
 
   <!-- Main Table Section using Ng-Zorro -->
@@ -85,30 +132,42 @@
             >
               <div class="flex items-center space-x-2">
                 @if (header.column.getCanGroup()) {
-                  <button
-                    nz-button
-                    nzType="text"
-                    nzSize="small"
-                    (click)="header.column.toggleGrouping()"
-                    [title]="header.column.getIsGrouped() ? 'Ungroup' : 'Group by ' + header.column.columnDef.header"
-                    class="flex items-center p-0"
+                  <div
+                    class="flex items-center space-x-1 cursor-move px-2 py-1 rounded transition-colors hover:bg-gray-100"
+                    [class.bg-blue-100]="draggedColumn === header.column.id"
+                    [class.cursor-grabbing]="draggedColumn === header.column.id"
+                    draggable="true"
+                    (dragstart)="onDragStart($event, header.column.id)"
+                    (dragend)="onDragEnd()"
+                    [title]="'Drag to group by ' + header.column.columnDef.header + ' or click button to toggle'"
                   >
+                    <nz-icon nzType="drag" class="text-gray-400 text-xs"></nz-icon>
+                    <ng-container
+                      *flexRender="
+                        header.column.columnDef.header;
+                        props: header.getContext();
+                        let headerValue
+                      "
+                    >
+                      <span class="font-semibold select-none">{{ headerValue }}</span>
+                    </ng-container>
                     @if (header.column.getIsGrouped()) {
-                      <span class="text-blue-600 text-xs">🛑{{ header.column.getGroupedIndex() }}</span>
-                    } @else {
-                      <span class="text-gray-500 hover:text-blue-600 text-xs">👊</span>
+                      <span class="bg-blue-600 text-white rounded-full w-4 h-4 flex items-center justify-center text-xs ml-1">
+                        {{ header.column.getGroupedIndex() + 1 }}
+                      </span>
                     }
-                  </button>
+                  </div>
+                } @else {
+                  <ng-container
+                    *flexRender="
+                      header.column.columnDef.header;
+                      props: header.getContext();
+                      let headerValue
+                    "
+                  >
+                    <span class="font-semibold">{{ headerValue }}</span>
+                  </ng-container>
                 }
-                <ng-container
-                  *flexRender="
-                    header.column.columnDef.header;
-                    props: header.getContext();
-                    let headerValue
-                  "
-                >
-                  <span class="font-semibold">{{ headerValue }}</span>
-                </ng-container>
               </div>
             </th>
           }
@@ -222,10 +281,11 @@
     </div>
 
     <div class="mt-4 text-sm text-gray-600">
-      <strong>Instructions:</strong> 
-      Click 👊 buttons to group by columns, 🛑 to ungroup. 
+      <strong>Drag & Drop Instructions:</strong> 
+      Drag column headers (with <nz-icon nzType="drag" class="inline text-xs"></nz-icon> icon) to the drop zone above to group by that column. 
+      Drag groups in the drop zone to reorder them or click ✕ to remove.
       Use ➕/➖ buttons to expand/collapse grouped rows.
-      Try grouping by Department, then by Status for multi-level grouping.
+      Try dragging Department, then Status for multi-level grouping.
     </div>
   </nz-card>
 </div>

@@ -160,6 +160,8 @@ export class GroupedTableListComponent {
   }
 
   globalFilter = ''
+  draggedColumn: string | null = null
+  dropZoneActive = signal(false)
 
   clearAllGrouping() {
     this.grouping.set([])
@@ -173,5 +175,73 @@ export class GroupedTableListComponent {
     } else {
       column.clearSorting()
     }
+  }
+
+  // Drag and Drop functionality
+  onDragStart(event: DragEvent, columnId: string) {
+    this.draggedColumn = columnId
+    if (event.dataTransfer) {
+      event.dataTransfer.effectAllowed = 'move'
+      event.dataTransfer.setData('text/plain', columnId)
+    }
+  }
+
+  onDragEnd() {
+    this.draggedColumn = null
+    this.dropZoneActive.set(false)
+  }
+
+  onDropZoneDragOver(event: DragEvent) {
+    event.preventDefault()
+    this.dropZoneActive.set(true)
+    if (event.dataTransfer) {
+      event.dataTransfer.dropEffect = 'move'
+    }
+  }
+
+  onDropZoneDragLeave() {
+    this.dropZoneActive.set(false)
+  }
+
+  onDropZoneDrop(event: DragEvent) {
+    event.preventDefault()
+    this.dropZoneActive.set(false)
+    
+    const columnId = event.dataTransfer?.getData('text/plain')
+    if (columnId && !this.grouping().includes(columnId)) {
+      const newGrouping = [...this.grouping(), columnId]
+      this.grouping.set(newGrouping)
+    }
+  }
+
+  onGroupTagDragStart(event: DragEvent, columnId: string, index: number) {
+    if (event.dataTransfer) {
+      event.dataTransfer.effectAllowed = 'move'
+      event.dataTransfer.setData('text/plain', columnId)
+      event.dataTransfer.setData('text/index', index.toString())
+    }
+  }
+
+  onGroupTagDrop(event: DragEvent, targetIndex: number) {
+    event.preventDefault()
+    const draggedColumnId = event.dataTransfer?.getData('text/plain')
+    const draggedIndex = parseInt(event.dataTransfer?.getData('text/index') || '-1')
+    
+    if (draggedColumnId && draggedIndex !== -1 && draggedIndex !== targetIndex) {
+      const newGrouping = [...this.grouping()]
+      const [removed] = newGrouping.splice(draggedIndex, 1)
+      newGrouping.splice(targetIndex, 0, removed)
+      this.grouping.set(newGrouping)
+    }
+  }
+
+  removeGrouping(columnId: string) {
+    const newGrouping = this.grouping().filter(id => id !== columnId)
+    this.grouping.set(newGrouping)
+  }
+
+  getColumnHeader(columnId: string): string {
+    const column = this.columns().find(col => (col as any).accessorKey === columnId)
+    return (column as any)?.header as string || columnId
   }
 }

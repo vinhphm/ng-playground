@@ -99,3 +99,79 @@ pre {
   max-height: 200px;
   overflow-y: auto;
 }
+
+/* Drag and Drop Styles */
+.drag-handle {
+  cursor: grab;
+  transition: all 0.2s ease;
+}
+
+.drag-handle:active {
+  cursor: grabbing;
+}
+
+.drag-handle:hover {
+  background-color: rgba(59, 130, 246, 0.1);
+}
+
+.drop-zone {
+  transition: all 0.3s ease;
+  min-height: 60px;
+}
+
+.drop-zone.active {
+  border-color: #3b82f6 !important;
+  background-color: #eff6ff !important;
+  transform: scale(1.02);
+}
+
+.group-tag {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.group-tag:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Ensure group tags don't wrap content */
+nz-tag {
+  display: inline-flex !important;
+  align-items: center !important;
+  white-space: nowrap !important;
+  flex-shrink: 0 !important;
+}
+
+nz-tag .ant-tag {
+  display: inline-flex !important;
+  align-items: center !important;
+  white-space: nowrap !important;
+}
+
+.dragging {
+  opacity: 0.7;
+  transform: rotate(3deg);
+}
+
+.drag-ghost {
+  background-color: #f3f4f6;
+  border: 2px dashed #9ca3af;
+  opacity: 0.5;
+}
+
+/* Header draggable area styling */
+.draggable-header {
+  user-select: none;
+  transition: all 0.2s ease;
+}
+
+.draggable-header:hover {
+  background-color: rgba(59, 130, 246, 0.05);
+  transform: translateY(-1px);
+}
+
+.draggable-header.dragging {
+  opacity: 0.5;
+  transform: rotate(2deg) scale(1.05);
+  z-index: 1000;
+}
