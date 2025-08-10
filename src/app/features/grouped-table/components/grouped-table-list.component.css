@@ -18,7 +18,7 @@ td.grouped-cell {
 }
 
 /* Prevent text overflow in table cells */
-.nz-table-tbody>tr>td {
+.nz-table-tbody > tr > td {
   @apply align-top break-words whitespace-normal;
 }
 
@@ -48,13 +48,13 @@ th {
 }
 
 /* Ensure proper column widths */
-.nz-table-thead>tr>th,
-.nz-table-tbody>tr>td {
+.nz-table-thead > tr > th,
+.nz-table-tbody > tr > td {
   @apply min-w-[120px];
 }
 
 /* Specific column width adjustments for grouped content */
-.nz-table-tbody>tr>td.grouped-cell {
+.nz-table-tbody > tr > td.grouped-cell {
   @apply min-w-[200px] max-w-[350px];
 }
 
@@ -129,10 +129,10 @@ nz-tag .ant-tag {
 
 /* Apply drag hint styling to the actual nz-tag element */
 nz-tag.drag-hint-preview .ant-tag {
-  opacity: 0.6 !important;
-  border: 2px dashed #3b82f6 !important;
-  background-color: rgba(59, 130, 246, 0.1) !important;
-  color: rgba(59, 130, 246, 0.8) !important;
+  opacity: 0.6;
+  border: 2px dashed #3b82f6;
+  background-color: rgba(59, 130, 246, 0.1);
+  color: rgba(59, 130, 246, 0.8);
 }
 
 nz-tag.drag-hint-preview {
@@ -214,7 +214,6 @@ nz-tag.drag-hint-preview {
 }
 
 @keyframes pulse-placeholder {
-
   0%,
   100% {
     opacity: 0.4;

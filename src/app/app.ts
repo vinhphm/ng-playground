@@ -1,6 +1,7 @@
 import { Component, inject, type OnInit, signal } from '@angular/core'
 import { Router } from '@angular/router'
 import { RefineRouterService, ResourceService } from '@core'
+import { GroupedTableListContainerComponent } from '@features/grouped-table'
 import {
   PostCreateRouteComponent,
   PostEditRouteComponent,
@@ -8,7 +9,6 @@ import {
   PostShowComponent,
 } from '@features/posts'
 import { UserListComponent, UserShowComponent } from '@features/users'
-import { GroupedTableListContainerComponent } from '@features/grouped-table'
 import { MainLayoutComponent } from '@shared/components'
 
 @Component({

@@ -1,30 +1,40 @@
+import {
+  type CdkDragDrop,
+  DragDropModule,
+  moveItemInArray,
+} from '@angular/cdk/drag-drop'
 import { CommonModule } from '@angular/common'
-import { Component, Input, signal, computed, ChangeDetectionStrategy, effect } from '@angular/core'
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  Input,
+  signal,
+} from '@angular/core'
 import { FormsModule } from '@angular/forms'
 import type { SampleData } from '@core'
-import { NzInputModule } from 'ng-zorro-antd/input'
+import {
+  type Cell,
+  type Column,
+  type ColumnDef,
+  createAngularTable,
+  FlexRenderDirective,
+  type GroupingState,
+  getCoreRowModel,
+  getExpandedRowModel,
+  getFilteredRowModel,
+  getGroupedRowModel,
+  getPaginationRowModel,
+  type Updater,
+} from '@tanstack/angular-table'
 import { NzButtonModule } from 'ng-zorro-antd/button'
-import { NzIconModule } from 'ng-zorro-antd/icon'
-import { NzTagModule } from 'ng-zorro-antd/tag'
 import { NzCardModule } from 'ng-zorro-antd/card'
 import { NzDividerModule } from 'ng-zorro-antd/divider'
-import { NzTableModule } from 'ng-zorro-antd/table'
+import { NzIconModule } from 'ng-zorro-antd/icon'
+import { NzInputModule } from 'ng-zorro-antd/input'
 import { NzSpaceModule } from 'ng-zorro-antd/space'
-import { DragDropModule, CdkDropList, CdkDrag, CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop'
-
-import {
-  createAngularTable,
-  getCoreRowModel,
-  getGroupedRowModel,
-  getExpandedRowModel,
-  getSortedRowModel,
-  getFilteredRowModel,
-  getPaginationRowModel,
-  type ColumnDef,
-  type GroupingState,
-  type Updater,
-  FlexRenderDirective,
-} from '@tanstack/angular-table'
+import { NzTableModule } from 'ng-zorro-antd/table'
+import { NzTagModule } from 'ng-zorro-antd/tag'
 
 @Component({
   selector: 'app-grouped-table-list',
@@ -48,11 +58,11 @@ import {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class GroupedTableListComponent {
-  @Input() set data(value: SampleData[]) {
-    this._data.set(value)
-  }
   get data(): SampleData[] {
     return this._data()
+  }
+  @Input() set data(value: SampleData[]) {
+    this._data.set(value)
   }
 
   @Input() loading = false
@@ -93,7 +103,8 @@ export class GroupedTableListComponent {
       enableGrouping: false,
       cell: (info) => `$${(info.getValue() as number).toLocaleString()}`,
       aggregationFn: 'mean',
-      aggregatedCell: (info) => `Avg: $${Math.round(info.getValue() as number).toLocaleString()}`,
+      aggregatedCell: (info) =>
+        `Avg: $${Math.round(info.getValue() as number).toLocaleString()}`,
     },
     {
       accessorKey: 'age',
@@ -121,7 +132,8 @@ export class GroupedTableListComponent {
       enableGrouping: false,
       cell: (info) => `${info.getValue()} years`,
       aggregationFn: 'mean',
-      aggregatedCell: (info) => `Avg: ${Math.round(info.getValue() as number)} years`,
+      aggregatedCell: (info) =>
+        `Avg: ${Math.round(info.getValue() as number)} years`,
     },
   ])
 
@@ -150,14 +162,18 @@ export class GroupedTableListComponent {
 
   getStatusTagColor(status: string): string {
     switch (status) {
-      case 'active': return 'success'
-      case 'inactive': return 'default'
-      case 'pending': return 'warning'
-      default: return 'default'
+      case 'active':
+        return 'success'
+      case 'inactive':
+        return 'default'
+      case 'pending':
+        return 'warning'
+      default:
+        return 'default'
     }
   }
 
-  getStatusColor(cell: any): string {
+  getStatusColor(cell: Cell<SampleData, unknown>): string {
     return this.getStatusTagColor(cell.getValue() as string)
   }
 
@@ -167,7 +183,7 @@ export class GroupedTableListComponent {
     this.grouping.set([])
   }
 
-  onSort(column: any, sortOrder: string | null) {
+  onSort(column: Column<SampleData, unknown>, sortOrder: string | null) {
     if (sortOrder === 'ascend') {
       column.toggleSorting(false)
     } else if (sortOrder === 'descend') {
@@ -211,12 +227,19 @@ export class GroupedTableListComponent {
   }
 
   removeGrouping(columnId: string) {
-    const newGrouping = this.grouping().filter(id => id !== columnId)
+    const newGrouping = this.grouping().filter((id) => id !== columnId)
     this.grouping.set(newGrouping)
   }
 
   getColumnHeader(columnId: string): string {
-    const column = this.columns().find(col => (col as any).accessorKey === columnId)
-    return (column as any)?.header as string || columnId
+    const column = this.columns().find(
+      (col) =>
+        (col as ColumnDef<SampleData> & { accessorKey?: string })
+          .accessorKey === columnId
+    )
+    return (
+      ((column as ColumnDef<SampleData> & { header?: string })
+        ?.header as string) || columnId
+    )
   }
 }

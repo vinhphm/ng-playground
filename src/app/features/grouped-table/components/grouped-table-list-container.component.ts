@@ -1,10 +1,8 @@
 import { CommonModule } from '@angular/common'
 import { Component, inject } from '@angular/core'
-import { GroupedTableListComponent } from './grouped-table-list.component'
 import { ApiService } from '@core'
-import {
-  injectQuery,
-} from '@tanstack/angular-query-experimental'
+import { injectQuery } from '@tanstack/angular-query-experimental'
+import { GroupedTableListComponent } from './grouped-table-list.component'
 
 @Component({
   selector: 'app-grouped-table-list-container',

@@ -6,7 +6,7 @@
   },
   "newProjectRoot": "projects",
   "projects": {
-    "ng-refine": {
+    "ng-playground": {
       "projectType": "application",
       "schematics": {},
       "root": "",
@@ -60,10 +60,10 @@
           "builder": "@angular/build:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "ng-refine:build:production"
+              "buildTarget": "ng-playground:build:production"
             },
             "development": {
-              "buildTarget": "ng-refine:build:development"
+              "buildTarget": "ng-playground:build:development"
             }
           },
           "defaultConfiguration": "development"
