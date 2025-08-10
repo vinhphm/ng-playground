@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common'
-import { Component, signal } from '@angular/core'
+import { ChangeDetectionStrategy, Component, signal } from '@angular/core'
 import { RouterOutlet } from '@angular/router'
 import { SidebarComponent } from '@shared/components/layout/sidebar/sidebar.component'
 import { NzLayoutModule } from 'ng-zorro-antd/layout'
@@ -10,6 +10,7 @@ import { NzLayoutModule } from 'ng-zorro-antd/layout'
   imports: [CommonModule, RouterOutlet, NzLayoutModule, SidebarComponent],
   templateUrl: './main-layout.component.html',
   styleUrl: './main-layout.component.css',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MainLayoutComponent {
   isCollapsed = signal(false)

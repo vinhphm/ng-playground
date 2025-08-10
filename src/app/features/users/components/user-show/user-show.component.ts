@@ -1,5 +1,11 @@
 import { CommonModule } from '@angular/common'
-import { Component, inject, type OnInit, signal } from '@angular/core'
+import {
+  ChangeDetectionStrategy,
+  Component,
+  inject,
+  type OnInit,
+  signal,
+} from '@angular/core'
 import { ActivatedRoute } from '@angular/router'
 import { ApiService, NavigationService } from '@core'
 import {
@@ -31,6 +37,7 @@ import { NzTagModule } from 'ng-zorro-antd/tag'
   ],
   templateUrl: './user-show.component.html',
   styleUrl: './user-show.component.css',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class UserShowComponent implements OnInit {
   private route = inject(ActivatedRoute)

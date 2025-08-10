@@ -1,5 +1,10 @@
 import { CommonModule } from '@angular/common'
-import { Component, computed, inject } from '@angular/core'
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  inject,
+} from '@angular/core'
 import { RouterOutlet } from '@angular/router'
 import { PostListComponent } from '@app/features/posts/components/post-list/post-list.component'
 import { ApiService, NavigationService } from '@core'
@@ -12,6 +17,7 @@ import {
   selector: 'app-post-list-container',
   standalone: true,
   imports: [CommonModule, RouterOutlet, PostListComponent],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <app-post-list
       [posts]="filteredPosts()"

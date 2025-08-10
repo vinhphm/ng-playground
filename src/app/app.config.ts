@@ -5,7 +5,7 @@ import {
   type ApplicationConfig,
   importProvidersFrom,
   provideBrowserGlobalErrorListeners,
-  provideZoneChangeDetection,
+  provideZonelessChangeDetection,
 } from '@angular/core'
 import { FormsModule } from '@angular/forms'
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async'
@@ -54,7 +54,7 @@ const icons = [
 export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
-    provideZoneChangeDetection({ eventCoalescing: true }),
+    provideZonelessChangeDetection(),
     provideRouter(routes),
     provideAnimationsAsync(),
     provideHttpClient(),

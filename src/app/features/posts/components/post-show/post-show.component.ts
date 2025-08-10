@@ -1,5 +1,11 @@
 import { CommonModule } from '@angular/common'
-import { Component, inject, type OnInit, signal } from '@angular/core'
+import {
+  ChangeDetectionStrategy,
+  Component,
+  inject,
+  type OnInit,
+  signal,
+} from '@angular/core'
 import { ActivatedRoute } from '@angular/router'
 import { ApiService, NavigationService } from '@core'
 import {
@@ -27,6 +33,7 @@ import { NzSpaceModule } from 'ng-zorro-antd/space'
   ],
   templateUrl: './post-show.component.html',
   styleUrl: './post-show.component.css',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PostShowComponent implements OnInit {
   private route = inject(ActivatedRoute)

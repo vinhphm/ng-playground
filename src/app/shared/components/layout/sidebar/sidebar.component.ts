@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common'
 import {
+  ChangeDetectionStrategy,
   Component,
   computed,
   EventEmitter,
@@ -26,6 +27,7 @@ import { NzMenuModule } from 'ng-zorro-antd/menu'
   ],
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.css',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SidebarComponent {
   private resourceService = inject(ResourceService)
