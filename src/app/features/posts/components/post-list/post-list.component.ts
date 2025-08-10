@@ -5,6 +5,7 @@ import type { Post } from '@core'
 import { NzButtonModule } from 'ng-zorro-antd/button'
 import { NzIconModule } from 'ng-zorro-antd/icon'
 import { NzInputModule } from 'ng-zorro-antd/input'
+import { NzPageHeaderModule } from 'ng-zorro-antd/page-header'
 import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm'
 import { NzSpaceModule } from 'ng-zorro-antd/space'
 import { NzTableModule } from 'ng-zorro-antd/table'
@@ -19,6 +20,7 @@ import { NzTableModule } from 'ng-zorro-antd/table'
     NzButtonModule,
     NzIconModule,
     NzInputModule,
+    NzPageHeaderModule,
     NzSpaceModule,
     NzPopconfirmModule,
   ],

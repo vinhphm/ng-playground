@@ -1,17 +1,18 @@
-<div class="page-header">
-  <h2>Users</h2>
-  <nz-space>
-    <nz-input-group nzSearch nzSize="large" *nzSpaceItem>
-      <input
-        type="text"
-        nz-input
-        placeholder="Search users..."
-        [(ngModel)]="searchText"
-        (ngModelChange)="onSearch()"
-      />
-    </nz-input-group>
-  </nz-space>
-</div>
+<nz-page-header nzTitle="Users">
+  <nz-page-header-extra>
+    <nz-space>
+      <nz-input-group nzSearch nzSize="large" *nzSpaceItem>
+        <input
+          type="text"
+          nz-input
+          placeholder="Search users..."
+          [(ngModel)]="searchText"
+          (ngModelChange)="onSearch()"
+        />
+      </nz-input-group>
+    </nz-space>
+  </nz-page-header-extra>
+</nz-page-header>
 
 <nz-table
   #basicTable

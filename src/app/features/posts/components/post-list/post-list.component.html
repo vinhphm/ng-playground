@@ -1,21 +1,22 @@
-<div class="page-header">
-  <h2>Posts</h2>
-  <nz-space>
-    <nz-input-group nzSearch *nzSpaceItem>
-      <input
-        type="text"
-        nz-input
-        placeholder="Search posts..."
-        [(ngModel)]="searchText"
-        (ngModelChange)="onSearchChange()"
-      />
-    </nz-input-group>
-    <button *nzSpaceItem nz-button nzType="primary" (click)="onCreatePost()">
-      <span nz-icon nzType="plus"></span>
-      Create Post
-    </button>
-  </nz-space>
-</div>
+<nz-page-header nzTitle="Posts">
+  <nz-page-header-extra>
+    <nz-space>
+      <nz-input-group nzSearch *nzSpaceItem>
+        <input
+          type="text"
+          nz-input
+          placeholder="Search posts..."
+          [(ngModel)]="searchText"
+          (ngModelChange)="onSearchChange()"
+        />
+      </nz-input-group>
+      <button *nzSpaceItem nz-button nzType="primary" (click)="onCreatePost()">
+        <span nz-icon nzType="plus"></span>
+        Create Post
+      </button>
+    </nz-space>
+  </nz-page-header-extra>
+  </nz-page-header>
 
 <nz-table
   #basicTable

@@ -31,6 +31,11 @@ export class App implements OnInit {
   private initializeResources() {
     this.resourceService.register([
       {
+        name: 'grouped-table',
+        list: GroupedTableListContainerComponent,
+        meta: { icon: 'table', label: 'Grouped Table' },
+      },
+      {
         name: 'posts',
         list: PostListContainerComponent,
         show: PostShowComponent,
@@ -49,11 +54,6 @@ export class App implements OnInit {
         show: UserShowComponent,
         meta: { icon: 'team', label: 'Users' },
       },
-      {
-        name: 'grouped-table',
-        list: GroupedTableListContainerComponent,
-        meta: { icon: 'table', label: 'Grouped Table' },
-      },
     ])
 
     const generatedRoutes = this.routerService.generateRoutes(
@@ -62,7 +62,7 @@ export class App implements OnInit {
 
     // Add default route
     const allRoutes = [
-      { path: '', redirectTo: '/posts', pathMatch: 'full' as const },
+      { path: '', redirectTo: '/grouped-table', pathMatch: 'full' as const },
       ...generatedRoutes,
     ]
 

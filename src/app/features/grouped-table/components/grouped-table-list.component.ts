@@ -32,6 +32,7 @@ import { NzCardModule } from 'ng-zorro-antd/card'
 import { NzDividerModule } from 'ng-zorro-antd/divider'
 import { NzIconModule } from 'ng-zorro-antd/icon'
 import { NzInputModule } from 'ng-zorro-antd/input'
+import { NzPageHeaderModule } from 'ng-zorro-antd/page-header'
 import { NzSpaceModule } from 'ng-zorro-antd/space'
 import { NzTableModule } from 'ng-zorro-antd/table'
 import { NzTagModule } from 'ng-zorro-antd/tag'
@@ -48,6 +49,7 @@ import { NzTagModule } from 'ng-zorro-antd/tag'
     NzTagModule,
     NzCardModule,
     NzDividerModule,
+    NzPageHeaderModule,
     NzTableModule,
     NzSpaceModule,
     FlexRenderDirective,

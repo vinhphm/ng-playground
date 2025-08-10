@@ -7,6 +7,7 @@ import {
   inject,
   Output,
 } from '@angular/core'
+import { Router } from '@angular/router'
 import { NavigationService, ResourceService } from '@core'
 import { NzButtonModule } from 'ng-zorro-antd/button'
 import { NzIconModule } from 'ng-zorro-antd/icon'
@@ -29,6 +30,7 @@ import { NzMenuModule } from 'ng-zorro-antd/menu'
 export class SidebarComponent {
   private resourceService = inject(ResourceService)
   private navigationService = inject(NavigationService)
+  private router = inject(Router)
 
   @Input() isCollapsed = false
   @Output() collapsedChange = new EventEmitter<boolean>()
@@ -39,9 +41,24 @@ export class SidebarComponent {
     this.collapsedChange.emit(collapsed)
   }
 
-  isCurrentRoute(_resource: string, _action: string): boolean {
-    // This is a simplified check - in a real app you'd want to check against the current route
-    return false
+  isCurrentRoute(resource: string, _action: string): boolean {
+    // Determine deepest activated route and read its data
+    let snapshot = this.router.routerState.snapshot.root
+    while (snapshot.firstChild) {
+      snapshot = snapshot.firstChild
+    }
+
+    const currentResource = snapshot.data['resource'] as string | undefined
+    const parentResource = snapshot.data['parentResource'] as
+      | string
+      | undefined
+
+    if (currentResource) {
+      return currentResource === resource || parentResource === resource
+    }
+
+    // Fallback: compare URL prefix when no route data is present
+    return this.router.url.startsWith(`/${resource}`)
   }
 
   navigateToResource(resource: string, action: 'list' | 'create') {
