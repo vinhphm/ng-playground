@@ -251,24 +251,37 @@
     </tbody>
   </nz-table>
 
-  <!-- Table Footer with Stats -->
+  <!-- Pagination Controls -->
   <nz-divider></nz-divider>
-  <div class="flex justify-between items-center text-sm text-gray-600">
-    <span>
-      Showing {{ table.getRowModel().rows.length }} rows
+  <div class="flex justify-between items-center">
+    <div class="text-sm text-gray-600">
+      <span>
+        Showing {{ table.getRowModel().rows.length }} of {{ data.length }} rows
+        @if (grouping().length > 0) {
+          | Grouped by {{ grouping().length }} column{{ grouping().length > 1 ? 's' : '' }}
+        }
+      </span>
       @if (grouping().length > 0) {
-        | Grouped by {{ grouping().length }} column{{ grouping().length > 1 ? 's' : '' }}
-      }
-    </span>
-    <div class="flex space-x-4">
-      <span>Total Data: {{ data.length }}</span>
-      @if (grouping().length > 0) {
-        <span>Groups: {{ table.getGroupedRowModel().rows.length }}</span>
-      } @else {
-        <span>Groups: 0</span>
+        <span class="ml-4">Groups: {{ table.getGroupedRowModel().rows.length }}</span>
       }
     </div>
+    
+    <nz-pagination
+      [nzPageIndex]="pagination().pageIndex + 1"
+      [nzPageSize]="pagination().pageSize"
+      [nzTotal]="data.length"
+      [nzShowSizeChanger]="true"
+      [nzShowQuickJumper]="true"
+      [nzPageSizeOptions]="[10, 20, 50, 100]"
+      [nzShowTotal]="totalTemplate"
+      (nzPageIndexChange)="onPageIndexChange($event)"
+      (nzPageSizeChange)="onPageSizeChange($event)"
+    ></nz-pagination>
   </div>
+
+  <ng-template #totalTemplate let-total let-range="range">
+    {{ range[0] }}-{{ range[1] }} of {{ total }} items
+  </ng-template>
 
   <div class="mt-4 text-sm text-gray-600">
     <strong>Drag & Drop Instructions:</strong>

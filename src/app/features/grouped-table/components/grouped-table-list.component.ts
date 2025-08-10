@@ -20,6 +20,7 @@ import {
   createAngularTable,
   FlexRenderDirective,
   type GroupingState,
+  type PaginationState,
   getCoreRowModel,
   getExpandedRowModel,
   getFilteredRowModel,
@@ -36,6 +37,7 @@ import { NzPageHeaderModule } from 'ng-zorro-antd/page-header'
 import { NzSpaceModule } from 'ng-zorro-antd/space'
 import { NzTableModule } from 'ng-zorro-antd/table'
 import { NzTagModule } from 'ng-zorro-antd/tag'
+import { NzPaginationModule } from 'ng-zorro-antd/pagination'
 
 @Component({
   selector: 'app-grouped-table-list',
@@ -52,6 +54,7 @@ import { NzTagModule } from 'ng-zorro-antd/tag'
     NzPageHeaderModule,
     NzTableModule,
     NzSpaceModule,
+    NzPaginationModule,
     FlexRenderDirective,
     DragDropModule,
   ],
@@ -71,6 +74,10 @@ export class GroupedTableListComponent {
 
   private _data = signal<SampleData[]>([])
   grouping = signal<GroupingState>([])
+  pagination = signal<PaginationState>({
+    pageIndex: 0,
+    pageSize: 10,
+  })
 
   stringifiedGrouping = computed(() => JSON.stringify(this.grouping(), null, 2))
 
@@ -144,6 +151,7 @@ export class GroupedTableListComponent {
     columns: this.columns(),
     state: {
       grouping: this.grouping(),
+      pagination: this.pagination(),
     },
     onGroupingChange: (updaterOrValue: Updater<GroupingState>) => {
       const groupingState =
@@ -151,6 +159,13 @@ export class GroupedTableListComponent {
           ? updaterOrValue([...this.grouping()])
           : updaterOrValue
       this.grouping.set(groupingState)
+    },
+    onPaginationChange: (updaterOrValue: Updater<PaginationState>) => {
+      const paginationState =
+        typeof updaterOrValue === 'function'
+          ? updaterOrValue({ ...this.pagination() })
+          : updaterOrValue
+      this.pagination.set(paginationState)
     },
     getExpandedRowModel: getExpandedRowModel(),
     getGroupedRowModel: getGroupedRowModel(),
@@ -243,5 +258,20 @@ export class GroupedTableListComponent {
       ((column as ColumnDef<SampleData> & { header?: string })
         ?.header as string) || columnId
     )
+  }
+
+  onPageIndexChange(pageIndex: number): void {
+    this.pagination.update((state) => ({
+      ...state,
+      pageIndex: pageIndex - 1, // ng-zorro uses 1-based indexing, TanStack uses 0-based
+    }))
+  }
+
+  onPageSizeChange(pageSize: number): void {
+    this.pagination.update((state) => ({
+      ...state,
+      pageSize,
+      pageIndex: 0, // Reset to first page when changing page size
+    }))
   }
 }
