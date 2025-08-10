@@ -87,3 +87,40 @@ Routes are automatically generated based on resource configuration:
 ## Testing Framework
 
 Uses **Jasmine** with **Karma** test runner. Test files follow the `*.spec.ts` convention.
+
+**Test Commands:**
+- **Run tests**: `ng test`
+- **Run tests with Bun**: `bun test`
+
+## Code Quality & Linting
+
+**Important**: Always run linting and formatting before committing:
+- **Lint code**: `ultracite lint` (or `bun run lint`)
+- **Format code**: `ultracite format` (or `bun run format`)
+- **Type check**: `ng build` performs TypeScript type checking
+
+**Linting Configuration:**
+- Uses **Biome** via **Ultracite** for linting and formatting
+- Configuration in `biome.jsonc`
+- Extends Ultracite's base configuration
+- Custom rules disabled for Angular-specific patterns
+
+## Deployment
+
+**Deployment to Cloudflare Pages:**
+- **Deploy command**: `bun run deploy`
+- **Build output**: `dist/ng-playground/browser`
+- **Configuration**: `wrangler.jsonc`
+- **SPA mode**: Configured for single-page application routing
+
+**Manual Build:**
+- **Development build**: `ng build`
+- **Production build**: `ng build --configuration production`
+- **Watch build**: `ng build --watch --configuration development`
+
+## Git Workflow
+
+This project follows a feature-branch workflow:
+- **Main branch**: `main` (default branch for PRs)
+- **Feature branches**: Create from `main` for new features
+- **Current branch**: `pagination` (as noted in git status)
